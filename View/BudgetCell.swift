@@ -1,6 +1,6 @@
 //
 //  BudgetCell.swift
-//  ispentmoney
+//  groovy
 //
 //  Created by Kyle Stokes on 7/9/18.
 //  Copyright © 2018 Kyle Stokes. All rights reserved.

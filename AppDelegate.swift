@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ispentmoney
+//  groovy
 //
 //  Created by Kyle Stokes on 6/28/18.
 //  Copyright © 2018 Kyle Stokes. All rights reserved.
