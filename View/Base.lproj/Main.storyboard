@@ -13,7 +13,7 @@
         <!--Budgets-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="BudgetViewController" customModule="ispentmoney" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="BudgetViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="116" width="414" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="budgetCell" rowHeight="100" id="BIF-Ka-t2O" customClass="BudgetCell" customModule="ispentmoney" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="budgetCell" rowHeight="100" id="BIF-Ka-t2O" customClass="BudgetCell" customModule="groovy" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BIF-Ka-t2O" id="V9J-Ij-Aau">
@@ -66,8 +66,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="yOA-5t-ziV"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="b9Q-nP-vH4"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="s7i-xX-bWV"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="RIk-by-IIX"/>
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugs-BE-1t4">
@@ -81,6 +81,9 @@
                                 <state key="normal" image="plus">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="addBudget:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2lA-XM-TAv"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -102,7 +105,79 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1078.2608695652175" y="90.489130434782609"/>
+            <point key="canvasLocation" x="786" y="92"/>
+        </scene>
+        <!--Add Budget View Controller-->
+        <scene sceneID="dDo-Lh-G83">
+            <objects>
+                <viewController storyboardIdentifier="addBudgetViewController" id="u5q-qg-fYO" customClass="AddBudgetViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HOc-bM-vBZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZER-77-qHO">
+                                <rect key="frame" x="0.0" y="20" width="414" height="96"/>
+                                <items>
+                                    <navigationItem title="Add budget" id="FZt-A1-wFj">
+                                        <barButtonItem key="leftBarButtonItem" image="close" id="baP-aE-DK3">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="dismiss:" destination="u5q-qg-fYO" id="RJE-Mq-ZoZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="dZe-Cs-cPI">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="saveBudget:" destination="u5q-qg-fYO" id="Gcw-lb-AlZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What's this budget called?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KlY-od-7NE">
+                                <rect key="frame" x="20" y="136" width="374" height="40"/>
+                                <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Mrb-lT-bRU"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="next"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What is the max you want to spend?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ivp-5P-tpP">
+                                <rect key="frame" x="20" y="186" width="374" height="40"/>
+                                <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="h5m-jV-AV1"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad" keyboardAppearance="light"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="KlY-od-7NE" firstAttribute="leading" secondItem="lgh-Eq-Nc2" secondAttribute="leading" constant="20" id="5aN-GR-3qI"/>
+                            <constraint firstItem="KlY-od-7NE" firstAttribute="top" secondItem="ZER-77-qHO" secondAttribute="bottom" constant="20" id="D2H-UC-vGk"/>
+                            <constraint firstItem="lgh-Eq-Nc2" firstAttribute="trailing" secondItem="ivp-5P-tpP" secondAttribute="trailing" constant="20" id="K03-B3-sAQ"/>
+                            <constraint firstItem="ivp-5P-tpP" firstAttribute="top" secondItem="KlY-od-7NE" secondAttribute="bottom" constant="10" id="NGd-6s-qPx"/>
+                            <constraint firstItem="lgh-Eq-Nc2" firstAttribute="trailing" secondItem="KlY-od-7NE" secondAttribute="trailing" constant="20" id="VrN-VP-SRF"/>
+                            <constraint firstItem="ZER-77-qHO" firstAttribute="top" secondItem="lgh-Eq-Nc2" secondAttribute="top" id="WAv-05-OXq"/>
+                            <constraint firstItem="ZER-77-qHO" firstAttribute="trailing" secondItem="lgh-Eq-Nc2" secondAttribute="trailing" id="YD0-RN-6Yc"/>
+                            <constraint firstItem="ivp-5P-tpP" firstAttribute="leading" secondItem="lgh-Eq-Nc2" secondAttribute="leading" constant="20" id="gbU-fy-w9A"/>
+                            <constraint firstItem="ZER-77-qHO" firstAttribute="leading" secondItem="lgh-Eq-Nc2" secondAttribute="leading" id="qTL-ao-6uZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lgh-Eq-Nc2"/>
+                    </view>
+                    <connections>
+                        <outlet property="budgetAmount" destination="ivp-5P-tpP" id="Av8-gY-yoa"/>
+                        <outlet property="budgetName" destination="KlY-od-7NE" id="38e-DW-6lp"/>
+                        <outlet property="save" destination="dZe-Cs-cPI" id="7m3-Uf-QVL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aNw-Kf-nxd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1443" y="92"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">
@@ -125,6 +200,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="close" width="20" height="20"/>
         <image name="plus" width="400" height="400"/>
     </resources>
 </document>
