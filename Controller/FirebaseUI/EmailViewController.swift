@@ -36,6 +36,7 @@ class EmailViewController: FUIEmailEntryViewController {
         emailTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         emailTextField.becomeFirstResponder()
         emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        emailTextField.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         self.view.addSubview(emailTextField)
         emailTextField.delegate = self
     }

@@ -78,6 +78,7 @@ class PasswordSignUpViewController: FUIPasswordSignUpViewController {
         userNameTextField.returnKeyType = UIReturnKeyType.next
         userNameTextField.clearButtonMode = UITextFieldViewMode.whileEditing;
         userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        userNameTextField.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         self.view.addSubview(userNameTextField)
         userNameTextField.becomeFirstResponder()
         userNameTextField.delegate = self
@@ -96,6 +97,7 @@ class PasswordSignUpViewController: FUIPasswordSignUpViewController {
         passwordTextField.clearButtonMode = UITextFieldViewMode.whileEditing;
         passwordTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        passwordTextField.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         passwordTextField.delegate = self
         
         // Add 'eye' to toggle password

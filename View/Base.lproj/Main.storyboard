@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Budgets-->
+        <!--Budget View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="BudgetViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
@@ -83,6 +83,7 @@
                                 </state>
                                 <connections>
                                     <action selector="addBudget:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2lA-XM-TAv"/>
+                                    <segue destination="u5q-qg-fYO" kind="presentation" identifier="addBudgetSegue" id="7H9-lM-Ohb"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -97,7 +98,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Budgets" id="a5U-Uw-lCa"/>
+                    <navigationItem key="navigationItem" id="a5U-Uw-lCa"/>
                     <connections>
                         <outlet property="addBudgetButton" destination="Ugs-BE-1t4" id="FNm-BG-D39"/>
                         <outlet property="budgetsTable" destination="3ih-GJ-RwO" id="QNd-1Z-WHy"/>
@@ -105,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="786" y="92"/>
+            <point key="canvasLocation" x="820" y="92"/>
         </scene>
         <!--Add Budget View Controller-->
         <scene sceneID="dDo-Lh-G83">
@@ -177,7 +178,35 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aNw-Kf-nxd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1443" y="92"/>
+            <point key="canvasLocation" x="1555" y="90"/>
+        </scene>
+        <!--Budget Detail View Controller-->
+        <scene sceneID="8Ar-gG-NWT">
+            <objects>
+                <viewController storyboardIdentifier="budgetDetailViewController" id="6xo-Mn-fgw" customClass="BudgetDetailViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1s7-fg-ZGQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBt-f7-nRa">
+                                <rect key="frame" x="20" y="76" width="374" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="xTG-jB-HYI"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zNq-op-qcI"/>
+                    <connections>
+                        <outlet property="budgetName" destination="EBt-f7-nRa" id="PRU-si-lfq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3hY-JG-8g0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2282.608695652174" y="90.489130434782609"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">

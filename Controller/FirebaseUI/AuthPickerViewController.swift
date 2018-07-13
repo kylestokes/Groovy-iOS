@@ -25,11 +25,11 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Get device app is running on
-        getDevice()
-        
         // Status bar to white
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Get device app is running on
+        getDevice()
         
         // Navbar
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -40,7 +40,7 @@ class AuthPickerViewController: FUIAuthPickerViewController {
         navigationItem.backBarButtonItem?.title = ""
         
         // Add icon
-        addPeaceIcon()
+        addLavaLampIcon()
         
         // Add 'Peace.' text
         addPeaceText()
@@ -73,7 +73,7 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     }
     
     
-    func addPeaceIcon() {
+    func addLavaLampIcon() {
         let peaceHandOriginal = UIImage(named: "lava")
         // apply color to peace image
         // https://stackoverflow.com/a/27163581

@@ -80,6 +80,7 @@ class PasswordSignInViewController: FUIPasswordSignInViewController {
         passwordTextField.clearButtonMode = UITextFieldViewMode.whileEditing;
         passwordTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        passwordTextField.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         passwordTextField.delegate = self
         
         // Add 'eye' to toggle password
