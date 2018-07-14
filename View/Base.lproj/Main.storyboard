@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xeT-0O-eW8">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -10,23 +10,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Budget View Controller-->
+        <!--Budgets-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="BudgetViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3ih-GJ-RwO">
-                                <rect key="frame" x="0.0" y="116" width="414" height="620"/>
+                                <rect key="frame" x="0.0" y="140" width="375" height="638"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="budgetCell" rowHeight="100" id="BIF-Ka-t2O" customClass="BudgetCell" customModule="groovy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="100"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BIF-Ka-t2O" id="V9J-Ij-Aau">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="99.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t8K-gN-KNg">
@@ -70,8 +70,8 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="RIk-by-IIX"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugs-BE-1t4">
-                                <rect key="frame" x="344" y="666" width="60" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugs-BE-1t4" customClass="SpringButton" customModule="Spring">
+                                <rect key="frame" x="305" y="708" width="60" height="60"/>
                                 <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="Ht3-69-z7K"/>
@@ -81,6 +81,11 @@
                                 <state key="normal" image="plus">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeInLeft"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autohide" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="addBudget:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2lA-XM-TAv"/>
                                     <segue destination="u5q-qg-fYO" kind="presentation" identifier="addBudgetSegue" id="7H9-lM-Ohb"/>
@@ -98,7 +103,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="a5U-Uw-lCa"/>
+                    <navigationItem key="navigationItem" title="Budgets" id="a5U-Uw-lCa"/>
                     <connections>
                         <outlet property="addBudgetButton" destination="Ugs-BE-1t4" id="FNm-BG-D39"/>
                         <outlet property="budgetsTable" destination="3ih-GJ-RwO" id="QNd-1Z-WHy"/>
@@ -113,11 +118,11 @@
             <objects>
                 <viewController storyboardIdentifier="addBudgetViewController" id="u5q-qg-fYO" customClass="AddBudgetViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HOc-bM-vBZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZER-77-qHO">
-                                <rect key="frame" x="0.0" y="20" width="414" height="96"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                                 <items>
                                     <navigationItem title="Add budget" id="FZt-A1-wFj">
                                         <barButtonItem key="leftBarButtonItem" image="close" id="baP-aE-DK3">
@@ -135,8 +140,8 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What's this budget called?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KlY-od-7NE">
-                                <rect key="frame" x="20" y="136" width="374" height="40"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What's the name of this budget?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KlY-od-7NE">
+                                <rect key="frame" x="20" y="160" width="335" height="40"/>
                                 <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Mrb-lT-bRU"/>
@@ -145,8 +150,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What is the max you want to spend?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ivp-5P-tpP">
-                                <rect key="frame" x="20" y="186" width="374" height="40"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What's the max you want to spend?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ivp-5P-tpP">
+                                <rect key="frame" x="20" y="210" width="335" height="40"/>
                                 <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="h5m-jV-AV1"/>
@@ -183,30 +188,120 @@
         <!--Budget Detail View Controller-->
         <scene sceneID="8Ar-gG-NWT">
             <objects>
-                <viewController storyboardIdentifier="budgetDetailViewController" id="6xo-Mn-fgw" customClass="BudgetDetailViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="budgetDetail" id="6xo-Mn-fgw" customClass="BudgetDetailViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1s7-fg-ZGQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBt-f7-nRa">
-                                <rect key="frame" x="20" y="76" width="374" height="58"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="spent of $500.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpz-Sn-DgS" customClass="SpringLabel" customModule="Spring">
+                                <rect key="frame" x="20" y="521.66666666666663" width="335" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.020793685907034676" green="0.020793685907034676" blue="0.020793685907034676" alpha="0.55054045376712324" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autohide" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeIn"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$380.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1C-SN-Qbe" customClass="SpringLabel" customModule="Spring">
+                                <rect key="frame" x="20" y="466.66666666666669" width="335" height="42"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
+                                <color key="textColor" red="0.020793685907034676" green="0.020793685907034676" blue="0.020793685907034676" alpha="0.55235980308219179" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autohide" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeIn"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="left to spend" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MQ-L6-EuQ" customClass="SpringLabel" customModule="Spring">
+                                <rect key="frame" x="20" y="637.66666666666663" width="335" height="20.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autohide" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeIn"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$120.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNh-w2-tgi" customClass="SpringLabel" customModule="Spring">
+                                <rect key="frame" x="20" y="583" width="335" height="42"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autohide" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeIn"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xON-LV-E1o" customClass="SpringButton" customModule="Spring">
+                                <rect key="frame" x="305" y="708" width="60" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="MYI-hu-1W5"/>
+                                    <constraint firstAttribute="width" constant="60" id="vWa-7B-F9P"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="vff-2u-u7h"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="x0F-mG-5mp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="6"/>
+                                <state key="normal" image="plus">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeInLeft"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="addPurchase:" destination="6xo-Mn-fgw" eventType="touchUpInside" id="a1B-Mr-6q2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xTG-jB-HYI" firstAttribute="bottom" secondItem="3MQ-L6-EuQ" secondAttribute="bottom" constant="120" id="0fh-1J-3xs"/>
+                            <constraint firstItem="xON-LV-E1o" firstAttribute="trailing" secondItem="xTG-jB-HYI" secondAttribute="trailing" constant="-10" id="630-FN-gus"/>
+                            <constraint firstItem="3MQ-L6-EuQ" firstAttribute="top" secondItem="rNh-w2-tgi" secondAttribute="bottom" constant="12.67" id="9rf-f3-cWO"/>
+                            <constraint firstItem="xTG-jB-HYI" firstAttribute="trailing" secondItem="rNh-w2-tgi" secondAttribute="trailing" constant="20" id="I0P-l1-IUH"/>
+                            <constraint firstItem="xTG-jB-HYI" firstAttribute="trailing" secondItem="3MQ-L6-EuQ" secondAttribute="trailing" constant="20" id="Ppl-pP-GUz"/>
+                            <constraint firstItem="rNh-w2-tgi" firstAttribute="top" secondItem="xpz-Sn-DgS" secondAttribute="bottom" constant="41.329999999999998" id="UEf-vQ-SR7"/>
+                            <constraint firstItem="i1C-SN-Qbe" firstAttribute="leading" secondItem="xTG-jB-HYI" secondAttribute="leading" constant="20" id="aTJ-tF-BCk"/>
+                            <constraint firstItem="xTG-jB-HYI" firstAttribute="trailing" secondItem="xpz-Sn-DgS" secondAttribute="trailing" constant="20" id="jTc-bB-MaT"/>
+                            <constraint firstItem="xpz-Sn-DgS" firstAttribute="top" secondItem="i1C-SN-Qbe" secondAttribute="bottom" constant="12.67" id="kvr-Vm-NM7"/>
+                            <constraint firstItem="xTG-jB-HYI" firstAttribute="trailing" secondItem="i1C-SN-Qbe" secondAttribute="trailing" constant="20" id="l19-Mb-WMP"/>
+                            <constraint firstItem="3MQ-L6-EuQ" firstAttribute="leading" secondItem="xTG-jB-HYI" secondAttribute="leading" constant="20" id="nIi-5E-sRL"/>
+                            <constraint firstItem="xON-LV-E1o" firstAttribute="bottom" secondItem="xTG-jB-HYI" secondAttribute="bottom" constant="-10" id="ryB-Pg-Mth"/>
+                            <constraint firstItem="rNh-w2-tgi" firstAttribute="leading" secondItem="xTG-jB-HYI" secondAttribute="leading" constant="20" id="sUR-pa-3m0"/>
+                            <constraint firstItem="xpz-Sn-DgS" firstAttribute="leading" secondItem="xTG-jB-HYI" secondAttribute="leading" constant="20" id="zr1-hf-EsC"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="xTG-jB-HYI"/>
                     </view>
                     <navigationItem key="navigationItem" id="zNq-op-qcI"/>
                     <connections>
-                        <outlet property="budgetName" destination="EBt-f7-nRa" id="PRU-si-lfq"/>
+                        <outlet property="addPurchaseButton" destination="xON-LV-E1o" id="DgB-QP-uBe"/>
+                        <outlet property="leftToSpendAmountLabel" destination="rNh-w2-tgi" id="IU8-rC-AhI"/>
+                        <outlet property="leftToSpendLabel" destination="3MQ-L6-EuQ" id="VIA-Gh-Aej"/>
+                        <outlet property="spentLabel" destination="i1C-SN-Qbe" id="873-Em-kNQ"/>
+                        <outlet property="spentOfLabel" destination="xpz-Sn-DgS" id="coZ-Nz-NMH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hY-JG-8g0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2282.608695652174" y="90.489130434782609"/>
+            <point key="canvasLocation" x="2260.8695652173915" y="89.673913043478265"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">
@@ -214,7 +309,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xeT-0O-eW8" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Bmz-2y-WIg">
-                        <rect key="frame" x="0.0" y="20" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>

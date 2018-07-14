@@ -43,7 +43,6 @@ class BudgetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         FUIAuth.defaultAuthUI()?.delegate = self
-        signOut()
         configAuth()
         configAddBudgetButton()
         
@@ -53,9 +52,6 @@ class BudgetViewController: UIViewController {
         
         // Remove table lines
         self.budgetsTable.separatorStyle = .none
-        
-        // Adjust 'addBudgetButton' icon
-        addBudgetButton.imageEdgeInsets = UIEdgeInsetsMake(14, 14, 14, 14)
     }
     
     // MARK: Config
@@ -90,6 +86,7 @@ class BudgetViewController: UIViewController {
     
     func configAddBudgetButton() {
         addBudgetButton.layer.cornerRadius = addBudgetButton.frame.width / 2
+        addBudgetButton.imageEdgeInsets = UIEdgeInsetsMake(14, 14, 14, 14)
     }
     
     func authenticateUser() {
@@ -130,12 +127,6 @@ class BudgetViewController: UIViewController {
                                 self.budgets.remove(at: index)
                                 self.budgetsTable.deleteRows(at: [indexPath], with: .bottom)
                                 
-                                // Show alert that budget got removed with you
-                                let alert = UIAlertController(title: "'\(changedBudget.name!)' Removed", message: "You can no longer use this budget created by: \(changedBudget.createdBy!)", preferredStyle: .alert)
-                                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                                alert.addAction(okAction)
-                                self.present(alert, animated: true, completion: nil)
-                                
                                 // Budget got edited so update it
                             } else {
                                 self.budgets[index] = changedBudget
@@ -149,12 +140,6 @@ class BudgetViewController: UIViewController {
                 if (changedBudget.sharedWith?.contains(self.userEmail))! {
                     self.budgets.append(changedBudget)
                     self.budgetsTable.insertRows(at: [IndexPath(row: self.budgets.count - 1, section: 0)], with: .automatic)
-                    
-                    // Show alert that budget got shared with you
-                    let alert = UIAlertController(title: "'\(changedBudget.name!)' Added", message: "You can now use this budget created by: \(changedBudget.createdBy!)", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alert.addAction(okAction)
-                    self.present(alert, animated: true, completion: nil)
                 }
             }
         })
@@ -162,7 +147,7 @@ class BudgetViewController: UIViewController {
     
     func observeBudgetsDeleted() {
         Database.database().reference().child("budgets").observe(.childRemoved, with: { (snapshot: DataSnapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
+            if ((snapshot.value as? [String: AnyObject]) != nil) {
                 let uid = snapshot.key
                 for budget in self.budgets {
                     if budget.id == uid {
@@ -172,15 +157,6 @@ class BudgetViewController: UIViewController {
                             self.budgets.remove(at: index)
                             let indexPath = IndexPath(item: index, section: 0)
                             self.budgetsTable.deleteRows(at: [indexPath], with: .bottom)
-                            let deletedBudget = Budget.from(firebase: dictionary, uid: uid)
-                            
-                            // Show alert to user if original owner deleted budget
-                            if deletedBudget.createdBy != self.userEmail {
-                                let alert = UIAlertController(title: "'\(deletedBudget.name!)' Deleted", message: "\(deletedBudget.createdBy!) deleted this budget", preferredStyle: .alert)
-                                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                                alert.addAction(okAction)
-                                self.present(alert, animated: true, completion: nil)
-                            }
                         }
                     }
                 }
@@ -198,7 +174,7 @@ class BudgetViewController: UIViewController {
                 self.budgetsTable.reloadData()
             }
         } else {
-            let alert = UIAlertController(title: "🧐", message: "\(budget.createdBy!) created this budget. Only they can delete it.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Hmmm...", message: "\(budget.name!) was created by \(budget.createdBy!). Only they can delete it.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
@@ -262,7 +238,7 @@ extension BudgetViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let budgetToDelete = budgets[indexPath.row]
-            let alert = UIAlertController(title: "Delete '\(budgetToDelete.name!)'", message: "Are you sure you want to delete this budget?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Delete \(budgetToDelete.name!)", message: "Are you sure you want to delete this?", preferredStyle: .alert)
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (delete) in
                 self.delete(budget: budgetToDelete)
             })
@@ -289,9 +265,10 @@ extension BudgetViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let budgetDetailViewController = storyboard?.instantiateViewController(withIdentifier: "budgetDetailViewController") as! BudgetDetailViewController
+        let budgetDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetDetail") as! BudgetDetailViewController
         budgetDetailViewController.budget = self.budgets[indexPath.row]
         navigationController?.pushViewController(budgetDetailViewController, animated: true)
+        
     }
 }
 
