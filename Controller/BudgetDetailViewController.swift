@@ -52,6 +52,15 @@ class BudgetDetailViewController: UIViewController {
     func configNavigationBar() {
         navigationItem.title = budget.name
         navigationController?.navigationBar.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+        
+        // Share
+        let share = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: .done, target: self, action: #selector(shareBudget))
+        
+        // More
+        let more = UIBarButtonItem(image: #imageLiteral(resourceName: "dots"), style: .done, target: self, action: #selector(showMoreSheet))
+        
+        // Right bar button items
+        navigationItem.rightBarButtonItems = [more, share]
     }
     
     func configProgressRing() {
@@ -105,5 +114,32 @@ class BudgetDetailViewController: UIViewController {
             currency = "\(formattedCurrencyAmount)"
         }
         return currency
+    }
+    
+    @objc func shareBudget() {
+        
+    }
+    
+    // https://stackoverflow.com/a/39267898
+    @objc func showMoreSheet() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        sheet.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+        
+        sheet.addAction(UIAlertAction(title: "History", style: .default , handler:{ (UIAlertAction)in
+            print("History")
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction)in
+            print("Edit")
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction)in
+            print("User click Delete button")
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(sheet, animated: true, completion: nil)
     }
 }
