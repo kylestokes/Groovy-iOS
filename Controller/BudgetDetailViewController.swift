@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import UICircularProgressRing
 import Spring
 
@@ -14,7 +15,9 @@ class BudgetDetailViewController: UIViewController {
     
     // MARK: - Properties
     
+    var databaseReference: DatabaseReference!
     var budget: Budget!
+    var userEmail: String!
     var progressRing: UICircularProgressRingView!
     
     // MARK: - Outlets
@@ -45,6 +48,7 @@ class BudgetDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         animateToPercentageSpent()
+        getBudgetFromFirebase()
     }
     
     // MARK: - Config
@@ -54,7 +58,7 @@ class BudgetDetailViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         
         // Share
-        let share = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: .done, target: self, action: #selector(shareBudget))
+        let share = budget.isShared! ? UIBarButtonItem(image: #imageLiteral(resourceName: "shared-filled-icon"), style: .done, target: self, action: #selector(shareBudget)) : UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: .done, target: self, action: #selector(shareBudget))
         
         // More
         let more = UIBarButtonItem(image: #imageLiteral(resourceName: "dots"), style: .done, target: self, action: #selector(showMoreSheet))
@@ -117,7 +121,11 @@ class BudgetDetailViewController: UIViewController {
     }
     
     @objc func shareBudget() {
-        
+        let shareViewController = storyboard?.instantiateViewController(withIdentifier: "shareBudget") as! ShareViewController
+        shareViewController.budget = budget
+        shareViewController.userEmail = userEmail
+        shareViewController.databaseReference = databaseReference
+        self.present(shareViewController, animated: true, completion: nil)
     }
     
     // https://stackoverflow.com/a/39267898
@@ -141,5 +149,15 @@ class BudgetDetailViewController: UIViewController {
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         self.present(sheet, animated: true, completion: nil)
+    }
+    
+    func getBudgetFromFirebase() {
+        databaseReference.child("budgets").child("\(budget.id!)").observe(.value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let uid = snapshot.key
+                let budget = Budget.from(firebase: dictionary, uid: uid)
+                self.budget = budget
+            }
+        })
     }
 }

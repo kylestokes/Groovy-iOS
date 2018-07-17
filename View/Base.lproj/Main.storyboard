@@ -303,6 +303,128 @@
             </objects>
             <point key="canvasLocation" x="2260.8695652173915" y="89.673913043478265"/>
         </scene>
+        <!--Share View Controller-->
+        <scene sceneID="OHC-mj-fuK">
+            <objects>
+                <viewController storyboardIdentifier="shareBudget" id="Vcx-ub-VCK" customClass="ShareViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1uO-QD-AH3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xmD-ll-o4D">
+                                <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                                <items>
+                                    <navigationItem title="Share" id="A1A-xi-ZU3">
+                                        <barButtonItem key="leftBarButtonItem" image="close" id="jWl-SI-KWg">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="dismiss:" destination="Vcx-ub-VCK" id="s3d-SU-o9N"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Save" id="XeB-nJ-QJh">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="shareBudgetOnSave:" destination="Vcx-ub-VCK" id="Bgx-ro-QIS"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share-display" translatesAutoresizingMaskIntoConstraints="NO" id="wDp-gx-M33" customClass="SpringImageView" customModule="Spring">
+                                <rect key="frame" x="16" y="155" width="343" height="110"/>
+                                <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="wHA-vs-e3u"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add email address to share" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OuA-LF-TPa">
+                                <rect key="frame" x="16" y="280" width="343" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="z4m-iB-9lr">
+                                <rect key="frame" x="40" y="319.66666666666669" width="295" height="40"/>
+                                <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="zfj-WC-VCi"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="APe-Vr-eKW">
+                                <rect key="frame" x="0.0" y="417.66666666666674" width="375" height="360.33333333333326"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="emailCell" textLabel="HId-t0-rvM" style="IBUITableViewCellStyleDefault" id="5ju-Gh-6HW">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5ju-Gh-6HW" id="8oU-XN-Wxl">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HId-t0-rvM">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.666666666666664"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vcx-ub-VCK" id="WUe-cd-H77"/>
+                                    <outlet property="delegate" destination="Vcx-ub-VCK" id="L6q-XM-MR4"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shared with:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBh-FG-HSL">
+                                <rect key="frame" x="16" y="394.66666666666669" width="343" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zCz-7I-PPQ" firstAttribute="trailing" secondItem="OuA-LF-TPa" secondAttribute="trailing" constant="16" id="1Uv-S7-yi8"/>
+                            <constraint firstItem="APe-Vr-eKW" firstAttribute="top" secondItem="vBh-FG-HSL" secondAttribute="bottom" constant="5" id="6yp-wy-DQJ"/>
+                            <constraint firstItem="z4m-iB-9lr" firstAttribute="top" secondItem="OuA-LF-TPa" secondAttribute="bottom" constant="20" id="CSK-Q6-X4z"/>
+                            <constraint firstItem="wDp-gx-M33" firstAttribute="top" secondItem="xmD-ll-o4D" secondAttribute="bottom" constant="15" id="DbD-Zc-1Sc"/>
+                            <constraint firstItem="wDp-gx-M33" firstAttribute="leading" secondItem="zCz-7I-PPQ" secondAttribute="leading" constant="16" id="IFS-LC-gAT"/>
+                            <constraint firstItem="xmD-ll-o4D" firstAttribute="leading" secondItem="zCz-7I-PPQ" secondAttribute="leading" id="JBP-02-LU9"/>
+                            <constraint firstItem="zCz-7I-PPQ" firstAttribute="trailing" secondItem="z4m-iB-9lr" secondAttribute="trailing" constant="40" id="Nqq-rT-okb"/>
+                            <constraint firstItem="z4m-iB-9lr" firstAttribute="leading" secondItem="zCz-7I-PPQ" secondAttribute="leading" constant="40" id="Qr3-0h-Z8s"/>
+                            <constraint firstItem="zCz-7I-PPQ" firstAttribute="trailing" secondItem="wDp-gx-M33" secondAttribute="trailing" constant="16" id="UE1-ma-mSd"/>
+                            <constraint firstItem="OuA-LF-TPa" firstAttribute="leading" secondItem="zCz-7I-PPQ" secondAttribute="leading" constant="16" id="VGl-5s-L19"/>
+                            <constraint firstItem="APe-Vr-eKW" firstAttribute="bottom" secondItem="zCz-7I-PPQ" secondAttribute="bottom" id="cul-9K-eJk"/>
+                            <constraint firstItem="APe-Vr-eKW" firstAttribute="trailing" secondItem="zCz-7I-PPQ" secondAttribute="trailing" id="eZ9-nF-qjK"/>
+                            <constraint firstItem="vBh-FG-HSL" firstAttribute="top" secondItem="z4m-iB-9lr" secondAttribute="bottom" constant="35" id="gXt-U6-n7k"/>
+                            <constraint firstItem="zCz-7I-PPQ" firstAttribute="trailing" secondItem="vBh-FG-HSL" secondAttribute="trailing" constant="16" id="jHf-yN-aZr"/>
+                            <constraint firstItem="xmD-ll-o4D" firstAttribute="top" secondItem="zCz-7I-PPQ" secondAttribute="top" id="lcF-0z-qux"/>
+                            <constraint firstItem="vBh-FG-HSL" firstAttribute="leading" secondItem="zCz-7I-PPQ" secondAttribute="leading" constant="16" id="lle-ce-K62"/>
+                            <constraint firstItem="xmD-ll-o4D" firstAttribute="trailing" secondItem="zCz-7I-PPQ" secondAttribute="trailing" id="nk5-Qo-WFB"/>
+                            <constraint firstItem="OuA-LF-TPa" firstAttribute="top" secondItem="wDp-gx-M33" secondAttribute="bottom" constant="15" id="xrI-cW-Wzv"/>
+                            <constraint firstItem="APe-Vr-eKW" firstAttribute="leading" secondItem="zCz-7I-PPQ" secondAttribute="leading" id="ywA-3K-KTl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zCz-7I-PPQ"/>
+                    </view>
+                    <connections>
+                        <outlet property="email" destination="z4m-iB-9lr" id="uW1-uP-phy"/>
+                        <outlet property="saveButton" destination="XeB-nJ-QJh" id="lL9-Uo-CJN"/>
+                        <outlet property="shareIcon" destination="wDp-gx-M33" id="De5-M3-JVw"/>
+                        <outlet property="sharedWith" destination="vBh-FG-HSL" id="a6G-QZ-tN6"/>
+                        <outlet property="tableView" destination="APe-Vr-eKW" id="1B8-dO-bAa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2A6-Mo-pMT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2943.1999999999998" y="87.931034482758619"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">
             <objects>
@@ -326,5 +448,6 @@
     <resources>
         <image name="close" width="20" height="20"/>
         <image name="plus" width="400" height="400"/>
+        <image name="share-display" width="400" height="400"/>
     </resources>
 </document>

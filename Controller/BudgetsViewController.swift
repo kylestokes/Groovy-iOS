@@ -136,8 +136,10 @@ class BudgetViewController: UIViewController {
                     }
                 }
                 
-                // Budget is not already in list aka budget got shared with user
-                if (changedBudget.sharedWith?.contains(self.userEmail))! {
+                // Budget is not already in list and budget got shared with user
+                // https://stackoverflow.com/a/28211238
+                let budgetsThatHaveChangedUID = self.budgets.filter { $0.id == uid }
+                if budgetsThatHaveChangedUID.isEmpty && (changedBudget.sharedWith?.contains(self.userEmail))! {
                     self.budgets.append(changedBudget)
                     self.budgetsTable.insertRows(at: [IndexPath(row: self.budgets.count - 1, section: 0)], with: .automatic)
                 }
@@ -267,6 +269,8 @@ extension BudgetViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let budgetDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetDetail") as! BudgetDetailViewController
         budgetDetailViewController.budget = self.budgets[indexPath.row]
+        budgetDetailViewController.userEmail = userEmail
+        budgetDetailViewController.databaseReference = databaseReference
         navigationController?.pushViewController(budgetDetailViewController, animated: true)
         
     }
