@@ -417,6 +417,7 @@
                         <outlet property="email" destination="z4m-iB-9lr" id="uW1-uP-phy"/>
                         <outlet property="saveButton" destination="XeB-nJ-QJh" id="lL9-Uo-CJN"/>
                         <outlet property="shareIcon" destination="wDp-gx-M33" id="De5-M3-JVw"/>
+                        <outlet property="shareLabel" destination="OuA-LF-TPa" id="aYs-PB-9iM"/>
                         <outlet property="sharedWith" destination="vBh-FG-HSL" id="a6G-QZ-tN6"/>
                         <outlet property="tableView" destination="APe-Vr-eKW" id="1B8-dO-bAa"/>
                     </connections>

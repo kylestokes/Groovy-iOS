@@ -25,6 +25,7 @@ class ShareViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var shareLabel: UILabel!
     
     // MARK: - Actions
     
@@ -46,19 +47,40 @@ class ShareViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configNavBar()
         configShareIcon()
         animateShareIcon()
+        configShareLabel()
         configTableView()
     }
     
+    func configNavBar() {
+        // Owner
+        if userEmail == budget.createdBy {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            // Hide for non-owner
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
     func configEmailTextField() {
-        email.delegate = self
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        email.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        // Owner
+        if userEmail == budget.createdBy {
+            email.delegate = self
+            email.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+            // Hide for non-owner
+        } else {
+            email.isEnabled = false
+        }
+    }
+    
+    func configShareLabel() {
+        shareLabel.text = userEmail == budget.createdBy ? "Add email address to share" : "Only owner can share"
     }
     
     func configTableView() {
-        // Open keyboartd for email if no shared emails exist
+        // Open keyboard for email if no shared emails exist
         if budget.sharedWith?.count == 1 {
             email.becomeFirstResponder()
         }
@@ -90,7 +112,6 @@ class ShareViewController: UIViewController {
     }
     
     @objc func shareBudget() {
-        
         // Add new email
         var sharedWith = budget.sharedWith!
         sharedWith.append(email.text!)
@@ -107,6 +128,9 @@ class ShareViewController: UIViewController {
         // Reconfig email text field
         email.text = ""
         email.resignFirstResponder()
+        
+        // Reconfig 'Save' button
+        saveButton.isEnabled = false
     }
     
     func firebaseSave(sharedWith: [String]) {
@@ -137,11 +161,22 @@ extension ShareViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "emailCell", for: indexPath)
         cell.textLabel?.textColor = UIColor.darkGray
+        // Show gray for Owner email
         if budget.sharedWith![indexPath.row] == budget.createdBy {
             cell.textLabel?.text = (budget.sharedWith?[indexPath.row])! + " (Owner)"
             cell.textLabel?.textColor = UIColor.lightGray
         } else if budget.sharedWith![indexPath.row] != "none" {
-            cell.textLabel?.text = budget.sharedWith?[indexPath.row]
+            // If owner, then show all emails as default
+            if budget.createdBy == userEmail {
+                cell.textLabel?.text = budget.sharedWith?[indexPath.row]
+                // Non-owner can only see themselves as default
+            } else {
+                cell.textLabel?.text = budget.sharedWith?[indexPath.row]
+                if budget.sharedWith?[indexPath.row] != userEmail {
+                    cell.textLabel?.textColor = UIColor.lightGray
+                }
+            }
+            // Hide table if no shared emails
         } else {
             tableView.isHidden = true
             sharedWith.isHidden = true
@@ -181,11 +216,15 @@ extension ShareViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let isOwnerEmail = budget.sharedWith![indexPath.row] == budget.createdBy
-        if isOwnerEmail {
-            return false
+        // If owner, all budgets are editable other than owner email
+        if budget.createdBy == userEmail {
+            let isOwnerEmail = budget.sharedWith![indexPath.row] == budget.createdBy
+            let returnValue = isOwnerEmail ? false : true
+            return returnValue
+            // Not owner so only user email is editable
         } else {
-            return true
+            let isUserEmail = budget.sharedWith![indexPath.row] == userEmail
+            return isUserEmail
         }
     }
 }
@@ -194,10 +233,8 @@ extension ShareViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if !(email.text?.isEmpty)! {
             shareBudget()
-            email.resignFirstResponder()
-        } else {
-            email.resignFirstResponder()
         }
+        email.resignFirstResponder()
         return true
     }
 }

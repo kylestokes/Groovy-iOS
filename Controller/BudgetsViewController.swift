@@ -43,6 +43,7 @@ class BudgetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         FUIAuth.defaultAuthUI()?.delegate = self
+        signOut()
         configAuth()
         configAddBudgetButton()
         
