@@ -15,10 +15,6 @@ import Pastel
 
 class BudgetViewController: UIViewController {
     
-    // MARK: Will use for budget
-    
-    //            let date = Date(timeIntervalSince1970: 1432233446145.0/1000.0)
-    
     // MARK: Properties
     var databaseReference: DatabaseReference!
     var budgets: [Budget]! = []
@@ -43,7 +39,6 @@ class BudgetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         FUIAuth.defaultAuthUI()?.delegate = self
-        signOut()
         configAuth()
         configAddBudgetButton()
         

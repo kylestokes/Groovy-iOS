@@ -10,6 +10,8 @@ import UIKit
 
 class BudgetCell: UITableViewCell {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var shareIcon: UIImageView!

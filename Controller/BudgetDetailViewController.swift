@@ -135,7 +135,10 @@ class BudgetDetailViewController: UIViewController {
         sheet.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         
         sheet.addAction(UIAlertAction(title: "History", style: .default , handler:{ (UIAlertAction)in
-            print("History")
+            let historyViewController = self.storyboard?.instantiateViewController(withIdentifier: "historyView") as! HistoryViewController
+            historyViewController.budget = self.budget
+            historyViewController.userEmail = self.userEmail
+            self.present(historyViewController, animated: true, completion: nil)
         }))
         
         sheet.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction)in

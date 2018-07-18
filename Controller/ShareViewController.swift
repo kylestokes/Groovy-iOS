@@ -169,14 +169,14 @@ extension ShareViewController: UITableViewDelegate, UITableViewDataSource {
             // If owner, then show all emails as default
             if budget.createdBy == userEmail {
                 cell.textLabel?.text = budget.sharedWith?[indexPath.row]
-                // Non-owner can only see themselves as default
+            // Non-owner can only see themselves as default
             } else {
                 cell.textLabel?.text = budget.sharedWith?[indexPath.row]
                 if budget.sharedWith?[indexPath.row] != userEmail {
                     cell.textLabel?.textColor = UIColor.lightGray
                 }
             }
-            // Hide table if no shared emails
+        // Hide table if no shared emails
         } else {
             tableView.isHidden = true
             sharedWith.isHidden = true
@@ -189,7 +189,7 @@ extension ShareViewController: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == .delete {
             let emailToDelete = budget.sharedWith![indexPath.row]
             
-            let alert = UIAlertController(title: "Remove \(emailToDelete)", message: "Removing \(emailToDelete) will no longer allow them to see this budget", preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Remove \(emailToDelete)?", message: "Removing \(emailToDelete) will no longer allow them to see this budget", preferredStyle: .actionSheet)
             
             alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
             
