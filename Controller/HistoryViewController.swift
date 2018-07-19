@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class HistoryViewController: UIViewController {
     
     // MARK: - Properties
     
+    var databaseReference: DatabaseReference!
     var budget: Budget!
     var userEmail: String!
     var budgetHistory: [String]!
@@ -21,19 +23,25 @@ class HistoryViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: - Actions
-    
-    @IBAction func dismiss(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     // MARK: - Life cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configNavBar()
         configBudgetHistory()
         configUserDate()
         configTableView()
+    }
+    
+    func configNavBar() {
+        self.title = "History"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "close"), style: .done, target: self, action: #selector(dismiss))
+        navigationController?.navigationBar.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+    }
+    
+    @objc func dismiss(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func configTableView() {
@@ -88,11 +96,43 @@ class HistoryViewController: UIViewController {
     }
     
     func deleteHistory(purchase: String) {
-        print(purchase)
+        let historyPurchaseToDelete = budgetHistory.index(of: purchase)
+        budgetHistory.remove(at: historyPurchaseToDelete!)
+        userDate.remove(at: historyPurchaseToDelete!)
+        updateBudgetSpent()
+        updateBudgetAmountLeft()
+        firebaseSave()
+        tableView.reloadData()
     }
     
     func editHistory(purchase: String) {
-        print(purchase)
+        let historyEditViewController = storyboard?.instantiateViewController(withIdentifier: "historyEdit") as! HistoryEditViewController
+        historyEditViewController.budget = budget
+        navigationController?.pushViewController(historyEditViewController, animated: true)
+    }
+    
+    func updateBudgetSpent() {
+        var newAmountSpent: Double = 0
+        for amount in budgetHistory {
+            let amountDouble = Double(amount.split(separator: ":")[0])
+            newAmountSpent += amountDouble!
+        }
+        budget.spent = newAmountSpent
+    }
+    
+    func updateBudgetAmountLeft() {
+        budget.left = budget.setAmount! - budget.spent!
+    }
+    
+    func firebaseSave() {
+        var userDateFirebase = userDate!
+        userDateFirebase.insert("none:none", at: 0)
+        var historyFirebase = budgetHistory!
+        historyFirebase.insert("none:none", at: 0)
+        databaseReference.child("budgets").child("\(budget.id!)").child("history").setValue(historyFirebase)
+        databaseReference.child("budgets").child("\(budget.id!)").child("userDate").setValue(userDateFirebase)
+        databaseReference.child("budgets").child("\(budget.id!)").child("spent").setValue(budget.spent!)
+        databaseReference.child("budgets").child("\(budget.id!)").child("left").setValue(budget.left!)
     }
     
     func formatAsCurrency(_ number: Double) -> String {

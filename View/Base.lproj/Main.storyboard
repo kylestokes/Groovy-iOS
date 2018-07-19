@@ -13,7 +13,7 @@
         <!--Budgets-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="BudgetViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="BudgetsViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -297,6 +297,7 @@
                         <outlet property="leftToSpendLabel" destination="3MQ-L6-EuQ" id="VIA-Gh-Aej"/>
                         <outlet property="spentLabel" destination="i1C-SN-Qbe" id="873-Em-kNQ"/>
                         <outlet property="spentOfLabel" destination="xpz-Sn-DgS" id="coZ-Nz-NMH"/>
+                        <segue destination="c4H-cb-EOp" kind="presentation" identifier="showHistorySegue" id="Adg-zY-TTb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hY-JG-8g0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -434,21 +435,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9kS-4X-R5n">
-                                <rect key="frame" x="0.0" y="44" width="375" height="96"/>
-                                <items>
-                                    <navigationItem title="History" id="pEB-py-jdb">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" image="close" id="dqL-6r-Zqo">
-                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <connections>
-                                                <action selector="dismiss:" destination="Ln2-a5-hIN" id="NBQ-Ny-hai"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Np-Ke-qY9">
-                                <rect key="frame" x="0.0" y="140" width="375" height="638"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="historyCell" rowHeight="78" id="piW-l4-5LT" customClass="HistoryCell" customModule="groovy" customModuleProvider="target">
@@ -504,23 +492,36 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9kS-4X-R5n" firstAttribute="leading" secondItem="1wX-fr-u9I" secondAttribute="leading" id="Ceu-WL-NdJ"/>
-                            <constraint firstItem="9kS-4X-R5n" firstAttribute="top" secondItem="1wX-fr-u9I" secondAttribute="top" id="YKf-04-lvx"/>
-                            <constraint firstItem="9kS-4X-R5n" firstAttribute="trailing" secondItem="1wX-fr-u9I" secondAttribute="trailing" id="bS6-Yx-eNI"/>
+                            <constraint firstItem="4Np-Ke-qY9" firstAttribute="top" secondItem="1wX-fr-u9I" secondAttribute="top" id="8kz-Kt-uyK"/>
                             <constraint firstItem="4Np-Ke-qY9" firstAttribute="trailing" secondItem="1wX-fr-u9I" secondAttribute="trailing" id="l9B-1j-70J"/>
                             <constraint firstItem="4Np-Ke-qY9" firstAttribute="bottom" secondItem="1wX-fr-u9I" secondAttribute="bottom" id="rpm-r1-3UX"/>
                             <constraint firstItem="4Np-Ke-qY9" firstAttribute="leading" secondItem="1wX-fr-u9I" secondAttribute="leading" id="yBD-ob-OOW"/>
-                            <constraint firstItem="4Np-Ke-qY9" firstAttribute="top" secondItem="9kS-4X-R5n" secondAttribute="bottom" id="yul-zK-gqX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1wX-fr-u9I"/>
                     </view>
+                    <navigationItem key="navigationItem" id="PAx-y9-GKy"/>
                     <connections>
                         <outlet property="tableView" destination="4Np-Ke-qY9" id="luD-Us-RQh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TAx-D5-IkD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3652" y="87.931034482758619"/>
+            <point key="canvasLocation" x="4348" y="87.931034482758619"/>
+        </scene>
+        <!--History Edit View Controller-->
+        <scene sceneID="5tf-Cb-uz2">
+            <objects>
+                <viewController storyboardIdentifier="historyEdit" id="P06-Du-XUy" customClass="HistoryEditViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GCj-Tp-aOe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="nr8-O8-EtC"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uH0-NR-yxM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5062" y="88"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">
@@ -540,6 +541,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ea2-yF-O8j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140" y="92.364532019704441"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="akZ-Er-Sk2">
+            <objects>
+                <navigationController storyboardIdentifier="historyNav" automaticallyAdjustsScrollViewInsets="NO" id="c4H-cb-EOp" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R6B-9R-vcw">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Ln2-a5-hIN" kind="relationship" relationship="rootViewController" id="HCa-3R-CWc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HUB-HI-iuE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3652" y="87.931034482758619"/>
         </scene>
     </scenes>
     <resources>

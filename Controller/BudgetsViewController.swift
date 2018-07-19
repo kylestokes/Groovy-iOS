@@ -13,7 +13,7 @@ import GoogleSignIn
 import Spring
 import Pastel
 
-class BudgetViewController: UIViewController {
+class BudgetsViewController: UIViewController {
     
     // MARK: Properties
     var databaseReference: DatabaseReference!
@@ -217,7 +217,7 @@ class BudgetViewController: UIViewController {
 
 // MARK: - BudgetViewController: UITableViewDelegate, UITableViewDataSource
 
-extension BudgetViewController: UITableViewDelegate, UITableViewDataSource {
+extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return budgets.count
     }
@@ -272,7 +272,7 @@ extension BudgetViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension BudgetViewController: FUIAuthDelegate {
+extension BudgetsViewController: FUIAuthDelegate {
     func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
         return AuthPickerViewController(nibName: "AuthPickerViewController", bundle: Bundle.main, authUI: authUI)
     }

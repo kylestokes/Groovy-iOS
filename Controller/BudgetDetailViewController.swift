@@ -18,7 +18,7 @@ class BudgetDetailViewController: UIViewController {
     var databaseReference: DatabaseReference!
     var budget: Budget!
     var userEmail: String!
-    var progressRing: UICircularProgressRingView!
+    var progressRing: UICircularProgressRing!
     
     // MARK: - Outlets
     
@@ -40,15 +40,19 @@ class BudgetDetailViewController: UIViewController {
         configNavigationBar()
         configProgressRing()
         configAddPurchaseButton()
-        addToSpendText()
-        addSpentText()
-        addLeftToSpentAmountLabel()
         addLeftToSpendLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         animateToPercentageSpent()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getBudgetFromFirebase()
+        addToSpendText()
+        addSpentText()
+        addLeftToSpentAmountLabel()
     }
     
     // MARK: - Config
@@ -68,7 +72,7 @@ class BudgetDetailViewController: UIViewController {
     }
     
     func configProgressRing() {
-        progressRing = UICircularProgressRingView(frame: CGRect(x: view.bounds.midX - 105, y: 190, width: 210, height: 210))
+        progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 190, width: 210, height: 210))
         progressRing.innerCapStyle = .round
         progressRing.outerCapStyle = .round
         progressRing.ringStyle = .gradient
@@ -91,7 +95,7 @@ class BudgetDetailViewController: UIViewController {
     
     func animateToPercentageSpent() {
         let percentage = CGFloat((budget.spent?.rounded())!) / CGFloat((budget.setAmount?.rounded())!)
-        progressRing.setProgress(to: CGFloat(percentage) * 100, duration: 2.0)
+        progressRing.startProgress(to: CGFloat(percentage) * 100, duration: 2.0)
     }
     
     func addToSpendText() {
@@ -135,10 +139,7 @@ class BudgetDetailViewController: UIViewController {
         sheet.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         
         sheet.addAction(UIAlertAction(title: "History", style: .default , handler:{ (UIAlertAction)in
-            let historyViewController = self.storyboard?.instantiateViewController(withIdentifier: "historyView") as! HistoryViewController
-            historyViewController.budget = self.budget
-            historyViewController.userEmail = self.userEmail
-            self.present(historyViewController, animated: true, completion: nil)
+            self.performSegue(withIdentifier: "showHistorySegue", sender: self)
         }))
         
         sheet.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction)in
@@ -162,5 +163,13 @@ class BudgetDetailViewController: UIViewController {
                 self.budget = budget
             }
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let historyNavigationController = segue.destination as! UINavigationController
+        let historyViewController = historyNavigationController.topViewController as! HistoryViewController
+        historyViewController.budget = self.budget
+        historyViewController.userEmail = self.userEmail
+        historyViewController.databaseReference = self.databaseReference
     }
 }

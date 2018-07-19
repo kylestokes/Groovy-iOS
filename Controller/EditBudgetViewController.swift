@@ -1,5 +1,5 @@
 //
-//  EditViewController.swift
+//  EditBudgetViewController.swift
 //  groovy
 //
 //  Created by Kyle Stokes on 7/15/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditViewController: UIViewController {
+class EditBudgetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
