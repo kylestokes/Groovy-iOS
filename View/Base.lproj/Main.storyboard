@@ -515,13 +515,46 @@
                     <view key="view" contentMode="scaleToFill" id="GCj-Tp-aOe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Amount" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Efd-U3-eO2">
+                                <rect key="frame" x="40" y="74" width="295" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="M1H-N7-427"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Note" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="r4d-ob-yU7">
+                                <rect key="frame" x="40" y="124" width="295" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="104-pl-Z0X"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="47a-J0-xDX"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="r4d-ob-yU7" firstAttribute="top" secondItem="Efd-U3-eO2" secondAttribute="bottom" constant="10" id="SLg-kt-fpU"/>
+                            <constraint firstItem="Efd-U3-eO2" firstAttribute="leading" secondItem="nr8-O8-EtC" secondAttribute="leading" constant="40" id="Vj2-oB-89i"/>
+                            <constraint firstItem="Efd-U3-eO2" firstAttribute="top" secondItem="nr8-O8-EtC" secondAttribute="top" constant="30" id="Wx2-zz-n2B"/>
+                            <constraint firstItem="nr8-O8-EtC" firstAttribute="trailing" secondItem="r4d-ob-yU7" secondAttribute="trailing" constant="40" id="eMl-yx-SzV"/>
+                            <constraint firstItem="nr8-O8-EtC" firstAttribute="trailing" secondItem="Efd-U3-eO2" secondAttribute="trailing" constant="40" id="h8x-mI-Xza"/>
+                            <constraint firstItem="r4d-ob-yU7" firstAttribute="leading" secondItem="nr8-O8-EtC" secondAttribute="leading" constant="40" id="mDa-so-X6w"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="nr8-O8-EtC"/>
                     </view>
+                    <connections>
+                        <outlet property="amount" destination="Efd-U3-eO2" id="Vlj-bl-Aaa"/>
+                        <outlet property="note" destination="r4d-ob-yU7" id="qiP-vG-Bna"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uH0-NR-yxM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5062" y="88"/>
+            <point key="canvasLocation" x="5061.6000000000004" y="87.931034482758619"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">

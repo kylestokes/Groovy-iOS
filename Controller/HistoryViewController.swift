@@ -108,6 +108,7 @@ class HistoryViewController: UIViewController {
     func editHistory(purchase: String) {
         let historyEditViewController = storyboard?.instantiateViewController(withIdentifier: "historyEdit") as! HistoryEditViewController
         historyEditViewController.budget = budget
+        historyEditViewController.purchase = purchase
         navigationController?.pushViewController(historyEditViewController, animated: true)
     }
     
