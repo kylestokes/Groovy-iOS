@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class HistoryEditViewController: UIViewController {
     
     // MARK: - Properties
     
+    var databaseReference: DatabaseReference!
     var budget: Budget!
     var purchase: String!
     var saveButton: UIBarButtonItem!
@@ -20,6 +22,8 @@ class HistoryEditViewController: UIViewController {
     
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var note: UITextField!
+    
+    // MARK: // Life cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,8 +43,11 @@ class HistoryEditViewController: UIViewController {
         let purchaseAmount = Double(purchase.split(separator: ":")[0])
         let purchaseAmountFormatted = formatAsCurrency(purchaseAmount!)
         amount.text = purchaseAmountFormatted.replacingOccurrences(of: "$", with: "")
+        amount.text = amount.text?.replacingOccurrences(of: ",", with: "")
         amount.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        amount.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         amount.becomeFirstResponder()
+        amount.delegate = self
     }
     
     func configNoteField() {
@@ -48,6 +55,7 @@ class HistoryEditViewController: UIViewController {
         note.text = noteText
         note.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
         note.delegate = self
+        note.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
     }
     
     func formatAsCurrency(_ number: Double) -> String {
@@ -66,7 +74,15 @@ class HistoryEditViewController: UIViewController {
     }
     
     @objc func save() {
-        print("Save")
+        let indexOfEditedPurchase = budget.history?.index(of: purchase)
+        budget.history![indexOfEditedPurchase!] = "\(amount.text!):\(note.text!)"
+        
+        // Save in Firebase and then pop to history
+        databaseReference.child("budgets").child("\(budget.id!)").child("history").setValue(budget.history!) { (error, ref) in
+            if error == nil {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     @objc func textFieldDidChange() {
@@ -80,5 +96,19 @@ extension HistoryEditViewController: UITextFieldDelegate {
             save()
         }
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Only allow numbers and 1 decimal in amount text field
+        // https://stackoverflow.com/a/48093890
+        if textField.keyboardType == .decimalPad {
+            let s = NSString(string: textField.text ?? "").replacingCharacters(in: range, with: string)
+            guard !s.isEmpty else { return true }
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .none
+            return numberFormatter.number(from: s)?.intValue != nil
+        } else {
+            return true
+        }
     }
 }

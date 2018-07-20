@@ -99,4 +99,18 @@ extension AddBudgetViewController: UITextFieldDelegate {
         }
         return true
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+       // Only allow numbers and 1 decimal in amount text field
+        // https://stackoverflow.com/a/48093890
+        if textField.keyboardType == .decimalPad {
+            let s = NSString(string: textField.text ?? "").replacingCharacters(in: range, with: string)
+            guard !s.isEmpty else { return true }
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .none
+            return numberFormatter.number(from: s)?.intValue != nil
+        } else {
+            return true
+        }
+    }
 }

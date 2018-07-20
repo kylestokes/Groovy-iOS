@@ -219,7 +219,13 @@ class BudgetsViewController: UIViewController {
 
 extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return budgets.count
+        if budgets.count == 0 {
+            tableView.isHidden = true
+            return 0
+        } else {
+            tableView.isHidden = false
+          return budgets.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -236,15 +242,20 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let budgetToDelete = budgets[indexPath.row]
-            let alert = UIAlertController(title: "Delete \(budgetToDelete.name!)", message: "Are you sure you want to delete this?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Delete \(budgetToDelete.name!)", message: "Are you sure you want to delete this?", preferredStyle: .actionSheet)
+            
+            alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+            
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (delete) in
                 self.delete(budget: budgetToDelete)
             })
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (cancel) in
                 self.dismiss(animated: true, completion: nil)
             })
+            
             alert.addAction(deleteAction)
             alert.addAction(cancelAction)
+            
             self.present(alert, animated: true, completion: nil)
         }
     }

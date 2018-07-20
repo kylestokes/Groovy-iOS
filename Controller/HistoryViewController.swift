@@ -27,10 +27,18 @@ class HistoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getBudgetFromFirebase()
         configNavBar()
         configBudgetHistory()
         configUserDate()
         configTableView()
+        updateBudgetSpent()
+        updateBudgetAmountLeft()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        firebaseSave()
     }
     
     func configNavBar() {
@@ -41,11 +49,14 @@ class HistoryViewController: UIViewController {
     }
     
     @objc func dismiss(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        updateBudgetSpent()
+        updateBudgetAmountLeft()
+        dismiss(animated: true, completion: nil)
     }
     
     func configTableView() {
         tableView.tableFooterView = UIView()
+        tableView.reloadData()
     }
     
     func configBudgetHistory() {
@@ -109,6 +120,7 @@ class HistoryViewController: UIViewController {
         let historyEditViewController = storyboard?.instantiateViewController(withIdentifier: "historyEdit") as! HistoryEditViewController
         historyEditViewController.budget = budget
         historyEditViewController.purchase = purchase
+        historyEditViewController.databaseReference = databaseReference
         navigationController?.pushViewController(historyEditViewController, animated: true)
     }
     
@@ -145,16 +157,27 @@ class HistoryViewController: UIViewController {
         }
         return currency
     }
+    
+    func getBudgetFromFirebase() {
+        databaseReference.child("budgets").child("\(budget.id!)").observe(.value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let uid = snapshot.key
+                let budget = Budget.from(firebase: dictionary, uid: uid)
+                self.budget = budget
+            }
+        })
+    }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if budgetHistory == nil {
+        if budgetHistory.count == 0 {
             tableView.isHidden = true
             return 0
         } else {
+            tableView.isHidden = false
             return budgetHistory.count
         }
     }
@@ -191,9 +214,9 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
             let deleteMessage = note == "" ? "Are you sure you want to delete this purchase?" : "Are you sure you want to delete '\(note)'?"
             
             let alert = UIAlertController(title: "Delete \(amountCurrency) Purchase", message: "\(deleteMessage)", preferredStyle: .actionSheet)
-
+            
             alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-
+            
             let deleteAction = UIAlertAction(title: "Delete", style: .default, handler: { (delete) in
                 self.deleteHistory(purchase: historyItemToDelete)
             })
@@ -206,7 +229,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
             self.editHistory(purchase: historyItemToEdit)
         }
     }
-
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
             self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)

@@ -43,16 +43,13 @@ class BudgetDetailViewController: UIViewController {
         addLeftToSpendLabel()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        animateToPercentageSpent()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getBudgetFromFirebase()
-        addToSpendText()
-        addSpentText()
-        addLeftToSpentAmountLabel()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        animateToPercentageSpent()
     }
     
     // MARK: - Config
@@ -161,6 +158,9 @@ class BudgetDetailViewController: UIViewController {
                 let uid = snapshot.key
                 let budget = Budget.from(firebase: dictionary, uid: uid)
                 self.budget = budget
+                self.addToSpendText()
+                self.addSpentText()
+                self.addLeftToSpentAmountLabel()
             }
         })
     }
