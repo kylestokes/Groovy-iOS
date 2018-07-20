@@ -41,9 +41,9 @@ class HistoryEditViewController: UIViewController {
     
     func configAmountField() {
         let purchaseAmount = Double(purchase.split(separator: ":")[0])
-        let purchaseAmountFormatted = formatAsCurrency(purchaseAmount!)
-        amount.text = purchaseAmountFormatted.replacingOccurrences(of: "$", with: "")
-        amount.text = amount.text?.replacingOccurrences(of: ",", with: "")
+        var purchaseAmountFormatted = formatAsCurrency(purchaseAmount!)
+        purchaseAmountFormatted = purchaseAmountFormatted.replacingOccurrences(of: "$", with: "")
+        amount.text = purchaseAmountFormatted.replacingOccurrences(of: ",", with: "")
         amount.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
         amount.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         amount.becomeFirstResponder()

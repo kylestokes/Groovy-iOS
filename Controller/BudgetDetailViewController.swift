@@ -135,15 +135,18 @@ class BudgetDetailViewController: UIViewController {
         
         sheet.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         
-        sheet.addAction(UIAlertAction(title: "History", style: .default , handler:{ (UIAlertAction)in
+        sheet.addAction(UIAlertAction(title: "History", style: .default , handler:{ (UIAlertAction) in
             self.performSegue(withIdentifier: "showHistorySegue", sender: self)
         }))
         
-        sheet.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction)in
-            print("Edit")
+        sheet.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction) in
+            let editBudgetViewController = self.storyboard?.instantiateViewController(withIdentifier: "editBudget") as! EditBudgetViewController
+            editBudgetViewController.databaseReference = self.databaseReference
+            editBudgetViewController.budget = self.budget
+            self.present(editBudgetViewController, animated: true, completion: nil)
         }))
         
-        sheet.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction)in
+        sheet.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction) in
             print("User click Delete button")
         }))
         
@@ -158,6 +161,7 @@ class BudgetDetailViewController: UIViewController {
                 let uid = snapshot.key
                 let budget = Budget.from(firebase: dictionary, uid: uid)
                 self.budget = budget
+                self.title = budget.name!
                 self.addToSpendText()
                 self.addSpentText()
                 self.addLeftToSpentAmountLabel()

@@ -583,6 +583,90 @@
             </objects>
             <point key="canvasLocation" x="5061.6000000000004" y="87.931034482758619"/>
         </scene>
+        <!--Edit Budget View Controller-->
+        <scene sceneID="FCb-ci-kzn">
+            <objects>
+                <viewController storyboardIdentifier="editBudget" id="ota-aa-8yl" customClass="EditBudgetViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="myK-Dk-dCZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m1U-eH-hss">
+                                <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                                <items>
+                                    <navigationItem title="Edit" id="Vbz-ot-pDq">
+                                        <barButtonItem key="leftBarButtonItem" image="close" id="k0R-mg-8cY">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="dismiss:" destination="ota-aa-8yl" id="ZLQ-2G-r6a"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="esB-JK-QLc">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="save:" destination="ota-aa-8yl" id="smM-TZ-YzO"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="a31-3L-OfY">
+                                <rect key="frame" x="40" y="170" width="295" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="JrH-zb-WUX"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="$" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="C7r-gu-vgq">
+                                <rect key="frame" x="40" y="220" width="295" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="mOF-GH-3l5"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k75-cd-bbS">
+                                <rect key="frame" x="0.0" y="729" width="375" height="49"/>
+                                <items>
+                                    <barButtonItem title="Reset" id="elJ-UK-lWa">
+                                        <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <action selector="reset:" destination="ota-aa-8yl" id="pLJ-nL-mgu"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="C7r-gu-vgq" firstAttribute="leading" secondItem="j3b-DE-Kmp" secondAttribute="leading" constant="40" id="1BZ-ro-nzK"/>
+                            <constraint firstItem="j3b-DE-Kmp" firstAttribute="trailing" secondItem="a31-3L-OfY" secondAttribute="trailing" constant="40" id="9os-zs-XrL"/>
+                            <constraint firstItem="a31-3L-OfY" firstAttribute="leading" secondItem="j3b-DE-Kmp" secondAttribute="leading" constant="40" id="H8b-qS-vdx"/>
+                            <constraint firstItem="m1U-eH-hss" firstAttribute="top" secondItem="j3b-DE-Kmp" secondAttribute="top" id="LB0-DU-CeH"/>
+                            <constraint firstItem="m1U-eH-hss" firstAttribute="leading" secondItem="j3b-DE-Kmp" secondAttribute="leading" id="eSH-JM-RhJ"/>
+                            <constraint firstItem="a31-3L-OfY" firstAttribute="top" secondItem="m1U-eH-hss" secondAttribute="bottom" constant="30" id="igr-Wc-iQO"/>
+                            <constraint firstItem="k75-cd-bbS" firstAttribute="leading" secondItem="j3b-DE-Kmp" secondAttribute="leading" id="jQD-3p-Xog"/>
+                            <constraint firstItem="j3b-DE-Kmp" firstAttribute="trailing" secondItem="C7r-gu-vgq" secondAttribute="trailing" constant="40" id="nvo-yS-EC2"/>
+                            <constraint firstItem="m1U-eH-hss" firstAttribute="trailing" secondItem="j3b-DE-Kmp" secondAttribute="trailing" id="oIW-oE-CwS"/>
+                            <constraint firstItem="k75-cd-bbS" firstAttribute="trailing" secondItem="j3b-DE-Kmp" secondAttribute="trailing" id="rIj-0d-lFy"/>
+                            <constraint firstItem="C7r-gu-vgq" firstAttribute="top" secondItem="a31-3L-OfY" secondAttribute="bottom" constant="10" id="t1B-k6-aTQ"/>
+                            <constraint firstItem="k75-cd-bbS" firstAttribute="bottom" secondItem="j3b-DE-Kmp" secondAttribute="bottom" id="vO2-wb-ulm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="j3b-DE-Kmp"/>
+                    </view>
+                    <connections>
+                        <outlet property="amount" destination="C7r-gu-vgq" id="7sS-Xf-gDZ"/>
+                        <outlet property="name" destination="a31-3L-OfY" id="Ijt-kS-2uR"/>
+                        <outlet property="saveButton" destination="esB-JK-QLc" id="h9s-6g-gEn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1bE-6Y-RLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5746" y="92"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">
             <objects>
