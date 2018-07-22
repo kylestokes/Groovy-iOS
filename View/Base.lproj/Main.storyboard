@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Budgets-->
+        <!--Budgets View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="BudgetsViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,13 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No budgets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wO2-qW-Nrj">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No budgets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wO2-qW-Nrj">
                                 <rect key="frame" x="16" y="392.66666666666669" width="343" height="27"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create one to get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFd-fz-UbN">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create one to get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFd-fz-UbN">
                                 <rect key="frame" x="16" y="421.66666666666669" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -82,7 +82,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="RIk-by-IIX"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugs-BE-1t4" customClass="SpringButton" customModule="Spring">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugs-BE-1t4" customClass="SpringButton" customModule="Spring">
                                 <rect key="frame" x="305" y="708" width="60" height="60"/>
                                 <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -121,10 +121,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Budgets" id="a5U-Uw-lCa"/>
+                    <navigationItem key="navigationItem" id="a5U-Uw-lCa"/>
                     <connections>
                         <outlet property="addBudgetButton" destination="Ugs-BE-1t4" id="FNm-BG-D39"/>
                         <outlet property="budgetsTable" destination="3ih-GJ-RwO" id="QNd-1Z-WHy"/>
+                        <outlet property="createOneLabel" destination="UFd-fz-UbN" id="nWQ-Mx-Ka2"/>
+                        <outlet property="noBudgetsLabel" destination="wO2-qW-Nrj" id="qgh-NT-unE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -660,12 +662,84 @@
                     <connections>
                         <outlet property="amount" destination="C7r-gu-vgq" id="7sS-Xf-gDZ"/>
                         <outlet property="name" destination="a31-3L-OfY" id="Ijt-kS-2uR"/>
+                        <outlet property="resetButton" destination="elJ-UK-lWa" id="VMk-vB-Ujh"/>
                         <outlet property="saveButton" destination="esB-JK-QLc" id="h9s-6g-gEn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1bE-6Y-RLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5746" y="92"/>
+        </scene>
+        <!--Spent Money View Controller-->
+        <scene sceneID="80X-py-8Um">
+            <objects>
+                <viewController storyboardIdentifier="spentMoney" id="Aud-NN-Y0H" customClass="SpentMoneyViewController" customModule="groovy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="C13-yl-7m0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svf-dr-QbH">
+                                <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                                <items>
+                                    <navigationItem title="Purchase" id="Tdg-x2-04j">
+                                        <barButtonItem key="leftBarButtonItem" image="close" id="qgc-ax-sun">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="dismiss:" destination="Aud-NN-Y0H" id="nyk-A5-92A"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Save" id="KPH-s8-LWI">
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <connections>
+                                                <action selector="save:" destination="Aud-NN-Y0H" id="nkM-AD-pbj"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="$" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WeD-7i-c89">
+                                <rect key="frame" x="40" y="170" width="295" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="NmX-3I-jIc"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Note" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lUm-Wf-boL">
+                                <rect key="frame" x="40" y="220" width="295" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="DWf-kz-Wdo"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="Lsa-5N-fWk"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="svf-dr-QbH" firstAttribute="leading" secondItem="NPO-U8-IP1" secondAttribute="leading" id="3Ea-dP-HIu"/>
+                            <constraint firstItem="svf-dr-QbH" firstAttribute="trailing" secondItem="NPO-U8-IP1" secondAttribute="trailing" id="6RR-zj-TEn"/>
+                            <constraint firstItem="lUm-Wf-boL" firstAttribute="leading" secondItem="NPO-U8-IP1" secondAttribute="leading" constant="40" id="G4j-7k-t5U"/>
+                            <constraint firstItem="svf-dr-QbH" firstAttribute="top" secondItem="NPO-U8-IP1" secondAttribute="top" id="I9q-RU-m7e"/>
+                            <constraint firstItem="WeD-7i-c89" firstAttribute="top" secondItem="svf-dr-QbH" secondAttribute="bottom" constant="30" id="JwO-6u-cgw"/>
+                            <constraint firstItem="NPO-U8-IP1" firstAttribute="trailing" secondItem="lUm-Wf-boL" secondAttribute="trailing" constant="40" id="Pit-Ns-751"/>
+                            <constraint firstItem="WeD-7i-c89" firstAttribute="leading" secondItem="NPO-U8-IP1" secondAttribute="leading" constant="40" id="eLt-Ty-mfG"/>
+                            <constraint firstItem="NPO-U8-IP1" firstAttribute="trailing" secondItem="WeD-7i-c89" secondAttribute="trailing" constant="40" id="kpg-xr-Cse"/>
+                            <constraint firstItem="lUm-Wf-boL" firstAttribute="top" secondItem="WeD-7i-c89" secondAttribute="bottom" constant="10" id="xwb-mo-HU2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="NPO-U8-IP1"/>
+                    </view>
+                    <connections>
+                        <outlet property="amount" destination="WeD-7i-c89" id="4y7-EH-AFC"/>
+                        <outlet property="note" destination="lUm-Wf-boL" id="zpQ-NX-cWt"/>
+                        <outlet property="saveButton" destination="KPH-s8-LWI" id="5ax-Jy-QTb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Blw-4k-tHC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6425" y="89"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Jq-Vi-4JW">

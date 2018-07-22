@@ -33,7 +33,7 @@ class HistoryEditViewController: UIViewController {
     }
     
     func configNavBar() {
-        self.title = "Edit"
+        self.title = "Edit purchase"
         saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(save))
         saveButton.isEnabled = textFieldsHaveValues()
         navigationItem.rightBarButtonItem = saveButton
@@ -51,7 +51,11 @@ class HistoryEditViewController: UIViewController {
     }
     
     func configNoteField() {
-        let noteText = String(purchase.split(separator: ":")[1])
+        var noteText = ""
+        // https://stackoverflow.com/a/35512668
+        if purchase.split(separator: ":").indices.contains(1) {
+            noteText = String(purchase.split(separator: ":")[1])
+        }
         note.text = noteText
         note.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
         note.delegate = self
@@ -69,7 +73,7 @@ class HistoryEditViewController: UIViewController {
     }
     
     func textFieldsHaveValues() -> Bool {
-        let textFieldsHaveValue = (amount.text?.count)! > 0 && (note.text?.count)! > 0 ? true : false
+        let textFieldsHaveValue = (amount.text?.count)! > 0 ? true : false
         return textFieldsHaveValue
     }
     

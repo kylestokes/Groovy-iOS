@@ -36,11 +36,6 @@ class HistoryViewController: UIViewController {
         updateBudgetAmountLeft()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        firebaseSave()
-    }
-    
     func configNavBar() {
         self.title = "History"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -51,7 +46,7 @@ class HistoryViewController: UIViewController {
     @objc func dismiss(_ sender: UIBarButtonItem) {
         updateBudgetSpent()
         updateBudgetAmountLeft()
-        dismiss(animated: true, completion: nil)
+        firebaseSave()
     }
     
     func configTableView() {
@@ -97,12 +92,12 @@ class HistoryViewController: UIViewController {
     }
     
     func getNoteFor(_ history: String) -> String {
-        let noteSubstring = history.split(separator: ":")[1]
-        if noteSubstring.isEmpty {
-            let note = ""
-            return note
-        } else {
+        // https://stackoverflow.com/a/35512668
+        if history.split(separator: ":").indices.contains(1) {
+            let noteSubstring = history.split(separator: ":")[1]
             return String(noteSubstring)
+        } else {
+            return ""
         }
     }
     
@@ -110,9 +105,6 @@ class HistoryViewController: UIViewController {
         let historyPurchaseToDelete = budgetHistory.index(of: purchase)
         budgetHistory.remove(at: historyPurchaseToDelete!)
         userDate.remove(at: historyPurchaseToDelete!)
-        updateBudgetSpent()
-        updateBudgetAmountLeft()
-        firebaseSave()
         tableView.reloadData()
     }
     
@@ -142,10 +134,22 @@ class HistoryViewController: UIViewController {
         userDateFirebase.insert("none:none", at: 0)
         var historyFirebase = budgetHistory!
         historyFirebase.insert("none:none", at: 0)
-        databaseReference.child("budgets").child("\(budget.id!)").child("history").setValue(historyFirebase)
-        databaseReference.child("budgets").child("\(budget.id!)").child("userDate").setValue(userDateFirebase)
-        databaseReference.child("budgets").child("\(budget.id!)").child("spent").setValue(budget.spent!)
-        databaseReference.child("budgets").child("\(budget.id!)").child("left").setValue(budget.left!)
+        var budgetDictionary: [String:Any] = [:]
+        budgetDictionary["name"] = budget.name
+        budgetDictionary["createdBy"] = budget.createdBy
+        budgetDictionary["hiddenFrom"] = budget.hiddenFrom
+        budgetDictionary["history"] = historyFirebase
+        budgetDictionary["isShared"] = budget.isShared
+        budgetDictionary["left"] = budget.left
+        budgetDictionary["setAmount"] = budget.setAmount
+        budgetDictionary["sharedWith"] = budget.sharedWith
+        budgetDictionary["spent"] = budget.spent
+        budgetDictionary["userDate"] = userDateFirebase
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
+            if error == nil {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     func formatAsCurrency(_ number: Double) -> String {
@@ -209,8 +213,12 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
             let historyItemToDelete = budgetHistory[indexPath.row]
             let amount = Double(historyItemToDelete.split(separator: ":")[0])
             let amountCurrency = formatAsCurrency(amount!)
-            let noteSubstring = historyItemToDelete.split(separator: ":")[1]
-            let note = String(noteSubstring)
+            var noteSubstring = ""
+            // https://stackoverflow.com/a/35512668
+            if historyItemToDelete.split(separator: ":").indices.contains(1) {
+                noteSubstring = String(historyItemToDelete.split(separator: ":")[1])
+            }
+            let note = noteSubstring
             let deleteMessage = note == "" ? "Are you sure you want to delete this purchase?" : "Are you sure you want to delete '\(note)'?"
             
             let alert = UIAlertController(title: "Delete \(amountCurrency) Purchase", message: "\(deleteMessage)", preferredStyle: .actionSheet)

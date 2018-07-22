@@ -15,12 +15,14 @@ class EditBudgetViewController: UIViewController {
     
     var databaseReference: DatabaseReference!
     var budget: Budget!
+    var userEmail: String!
     
     // MARK: - Outlets
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var amount: UITextField!
+    @IBOutlet weak var resetButton: UIBarButtonItem!
     
     // MARK: - Actions
     
@@ -38,14 +40,11 @@ class EditBudgetViewController: UIViewController {
     
     // MARK: - Life cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configName()
         configAmount()
+        configResetButton()
     }
     
     func configName() {
@@ -62,6 +61,10 @@ class EditBudgetViewController: UIViewController {
         amount.delegate = self
         amount.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         amount.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+    }
+    
+    func configResetButton() {
+        resetButton.isEnabled = budget.createdBy == userEmail ? true : false
     }
     
     func formatAsCurrency(_ number: Double) -> String {
@@ -100,19 +103,40 @@ class EditBudgetViewController: UIViewController {
     }
     
     func resetBudget() {
-        // TODO
-        
+        var budgetDictionary: [String:Any] = [:]
+        budgetDictionary["name"] = budget.name
+        budgetDictionary["createdBy"] = budget.createdBy
+        budgetDictionary["hiddenFrom"] = budget.hiddenFrom
+        budgetDictionary["history"] = ["none:none"]
+        budgetDictionary["isShared"] = budget.isShared
+        budgetDictionary["left"] = budget.setAmount
+        budgetDictionary["setAmount"] = budget.setAmount
+        budgetDictionary["sharedWith"] = budget.sharedWith
+        budgetDictionary["spent"] = 0
+        budgetDictionary["userDate"] = ["none:none"]
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
+            if error == nil {
+                self.resignAndDismiss()
+            }
+        }
     }
     
     @objc func save() {
-        // Save in Firebase and then dismiss
-        databaseReference.child("budgets").child("\(budget.id!)").child("name").setValue(name.text!) { (error, ref) in
+        let setAmount = Double(self.amount.text!)
+        var budgetDictionary: [String:Any] = [:]
+        budgetDictionary["name"] = name.text!
+        budgetDictionary["createdBy"] = budget.createdBy
+        budgetDictionary["hiddenFrom"] = budget.hiddenFrom
+        budgetDictionary["history"] = budget.history
+        budgetDictionary["isShared"] = budget.isShared
+        budgetDictionary["left"] = setAmount! - budget.spent!
+        budgetDictionary["setAmount"] = setAmount!
+        budgetDictionary["sharedWith"] = budget.sharedWith
+        budgetDictionary["spent"] = budget.spent
+        budgetDictionary["userDate"] = budget.userDate
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
             if error == nil {
-                self.databaseReference.child("budgets").child("\(self.budget.id!)").child("setAmount").setValue(Double(self.amount.text!)) { (error, ref) in
-                    if error == nil {
-                        self.resignAndDismiss()
-                    }
-                }
+                self.resignAndDismiss()
             }
         }
     }

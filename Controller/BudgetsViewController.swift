@@ -27,6 +27,9 @@ class BudgetsViewController: UIViewController {
     
     @IBOutlet weak var budgetsTable: UITableView!
     @IBOutlet weak var addBudgetButton: UIButton!
+    @IBOutlet weak var noBudgetsLabel: UILabel!
+    @IBOutlet weak var createOneLabel: UILabel!
+    
     
     // MARK: Actions
     
@@ -41,10 +44,6 @@ class BudgetsViewController: UIViewController {
         FUIAuth.defaultAuthUI()?.delegate = self
         configAuth()
         configAddBudgetButton()
-        
-        // Add 'Edit-Done' button
-        navigationItem.rightBarButtonItem = editButtonItem
-        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         
         // Remove table lines
         self.budgetsTable.separatorStyle = .none
@@ -85,6 +84,20 @@ class BudgetsViewController: UIViewController {
         addBudgetButton.imageEdgeInsets = UIEdgeInsetsMake(14, 14, 14, 14)
     }
     
+    func displayInterface() {
+        self.addBudgetButton.isHidden = false
+        self.title = "Budgets"
+        budgets.count == 0 ?  noBudgetLabelsHidden(false) : noBudgetLabelsHidden(true)
+        // Add 'Edit-Done' button
+        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+    }
+    
+    func noBudgetLabelsHidden(_ isHidden: Bool) {
+        self.noBudgetsLabel.isHidden = isHidden
+        self.createOneLabel.isHidden = isHidden
+    }
+    
     func authenticateUser() {
         let authViewController = FUIAuth.defaultAuthUI()?.authViewController()
         self.present(authViewController!, animated: true, completion: nil)
@@ -99,6 +112,7 @@ class BudgetsViewController: UIViewController {
                 if budget.createdBy == self.userEmail || (budget.sharedWith?.contains(self.userEmail))! {
                     self.budgets.append(budget)
                     self.budgetsTable.insertRows(at: [IndexPath(row: self.budgets.count - 1, section: 0)], with: .automatic)
+                    self.displayInterface()
                 }
             }
         })
@@ -119,7 +133,7 @@ class BudgetsViewController: UIViewController {
                         }) {
                             let indexPath = IndexPath(item: index, section: 0)
                             // User got removed from shared list so remove budget
-                            if !(changedBudget.sharedWith?.contains(self.userEmail))! {
+                            if !(changedBudget.sharedWith?.contains(self.userEmail))! && changedBudget.createdBy != self.userEmail {
                                 self.budgets.remove(at: index)
                                 self.budgetsTable.deleteRows(at: [indexPath], with: .bottom)
                                 
@@ -170,6 +184,9 @@ class BudgetsViewController: UIViewController {
             }) {
                 self.budgets.remove(at: index)
                 self.budgetsTable.reloadData()
+                if budgets.count == 0 {
+                    noBudgetLabelsHidden(false)
+                }
             }
         } else {
             let alert = UIAlertController(title: "Hmmm...", message: "\(budget.name!) was created by \(budget.createdBy!). Only they can delete it.", preferredStyle: .alert)
@@ -224,7 +241,7 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
             return 0
         } else {
             tableView.isHidden = false
-          return budgets.count
+            return budgets.count
         }
     }
     

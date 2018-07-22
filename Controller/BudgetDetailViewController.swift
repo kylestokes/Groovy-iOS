@@ -31,6 +31,11 @@ class BudgetDetailViewController: UIViewController {
     // MARK: -  Actions
     
     @IBAction func addPurchase(_ sender: UIButton) {
+        let spentMoneyViewController = storyboard?.instantiateViewController(withIdentifier: "spentMoney") as! SpentMoneyViewController
+        spentMoneyViewController.budget = budget
+        spentMoneyViewController.userEmail = userEmail
+        spentMoneyViewController.databaseReference = databaseReference
+        present(spentMoneyViewController, animated: true, completion: nil)
     }
     
     // MARK: - Life cycle
@@ -46,10 +51,6 @@ class BudgetDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getBudgetFromFirebase()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        animateToPercentageSpent()
     }
     
     // MARK: - Config
@@ -143,6 +144,7 @@ class BudgetDetailViewController: UIViewController {
             let editBudgetViewController = self.storyboard?.instantiateViewController(withIdentifier: "editBudget") as! EditBudgetViewController
             editBudgetViewController.databaseReference = self.databaseReference
             editBudgetViewController.budget = self.budget
+            editBudgetViewController.userEmail = self.userEmail
             self.present(editBudgetViewController, animated: true, completion: nil)
         }))
         
@@ -165,6 +167,9 @@ class BudgetDetailViewController: UIViewController {
                 self.addToSpendText()
                 self.addSpentText()
                 self.addLeftToSpentAmountLabel()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.animateToPercentageSpent()
+                }
             }
         })
     }
