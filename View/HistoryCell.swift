@@ -16,9 +16,10 @@ class HistoryCell: UITableViewCell {
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var note: UILabel!
-
+    @IBOutlet weak var cellView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        cellView.frame.size.width = UIScreen.main.bounds.width - 30
     }
 }

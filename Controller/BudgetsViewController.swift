@@ -30,7 +30,6 @@ class BudgetsViewController: UIViewController {
     @IBOutlet weak var noBudgetsLabel: UILabel!
     @IBOutlet weak var createOneLabel: UILabel!
     
-    
     // MARK: Actions
     
     @IBAction func addBudget(_ sender: Any) {
@@ -84,6 +83,24 @@ class BudgetsViewController: UIViewController {
         addBudgetButton.imageEdgeInsets = UIEdgeInsetsMake(14, 14, 14, 14)
     }
     
+    func configMenuButton() {
+        // https://stackoverflow.com/a/48658154
+        let menuButton = UIButton(type: .custom)
+        menuButton.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
+        let menuImage = UIImage(named: "menu")
+        let menuImageColored = menuImage?.withRenderingMode(.alwaysTemplate)
+        menuButton.setImage(menuImageColored, for: .normal)
+        menuButton.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+        menuButton.addTarget(self, action: #selector(showMenu), for: UIControlEvents.touchUpInside)
+        
+        let menuBarItem = UIBarButtonItem(customView: menuButton)
+        let currentWidth = menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 24)
+        currentWidth?.isActive = true
+        let currentHeight = menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 24)
+        currentHeight?.isActive = true
+        self.navigationItem.leftBarButtonItem = menuBarItem
+    }
+    
     func displayInterface() {
         self.addBudgetButton.isHidden = false
         self.title = "Budgets"
@@ -91,6 +108,8 @@ class BudgetsViewController: UIViewController {
         // Add 'Edit-Done' button
         navigationItem.rightBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+        // Add menu button
+        configMenuButton()
     }
     
     func noBudgetLabelsHidden(_ isHidden: Bool) {
@@ -226,9 +245,17 @@ class BudgetsViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let addBudgetViewController = segue.destination as! AddBudgetViewController
-        addBudgetViewController.userEmail = userEmail
-        addBudgetViewController.databaseReference = databaseReference
+        if segue.identifier == "addBudgetSegue" {
+            let addBudgetViewController = segue.destination as! AddBudgetViewController
+            addBudgetViewController.userEmail = userEmail
+            addBudgetViewController.databaseReference = databaseReference
+        } else {
+            // userMenuSegue
+        }
+    }
+    
+    @objc func showMenu() {
+        performSegue(withIdentifier: "userMenuSegue", sender: self)
     }
 }
 

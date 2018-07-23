@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class BudgetCell: UITableViewCell {
     
     // MARK: - Outlets
@@ -22,11 +23,12 @@ class BudgetCell: UITableViewCell {
         // https://stackoverflow.com/a/42456157
         cellView.backgroundColor = UIColor.white
         cellView.layer.cornerRadius = 10
+        cellView.frame.size.width = UIScreen.main.bounds.width - 30
         // https://stackoverflow.com/a/25475536
-        let shadowPath = UIBezierPath(roundedRect: cellView.bounds.insetBy(dx: 0, dy: -1), cornerRadius: 10)
+        let shadowPath = UIBezierPath(roundedRect: cellView.bounds.insetBy(dx: 0, dy: -3), cornerRadius: 10)
         cellView.layer.masksToBounds = false
         cellView.layer.shadowColor = UIColor.darkGray.cgColor
-        cellView.layer.shadowOffset = CGSize(width: CGFloat(0.6), height: CGFloat(3.0))
+        cellView.layer.shadowOffset = CGSize(width: CGFloat(0.6), height: CGFloat(4.5))
         cellView.layer.shadowOpacity = 0.2
         cellView.layer.shadowPath = shadowPath.cgPath
     }

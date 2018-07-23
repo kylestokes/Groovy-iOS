@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import UICircularProgressRing
 import Spring
+import DeviceKit
 
 class BudgetDetailViewController: UIViewController {
     
@@ -70,7 +71,13 @@ class BudgetDetailViewController: UIViewController {
     }
     
     func configProgressRing() {
-        progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 190, width: 210, height: 210))
+        let device = Device()
+        let iPhone5Devices = [Device.iPhone5, Device.iPhone5s, Device.iPhone5c, Device.simulator(Device.iPhone5), Device.simulator(Device.iPhone5s), Device.simulator(Device.iPhone5c)]
+        if device.isOneOf(iPhone5Devices) {
+            progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 90, y: 120, width: 180, height: 180))
+        } else {
+           progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 190, width: 210, height: 210))
+        }
         progressRing.innerCapStyle = .round
         progressRing.outerCapStyle = .round
         progressRing.ringStyle = .gradient
@@ -81,7 +88,7 @@ class BudgetDetailViewController: UIViewController {
         progressRing.outerRingColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         progressRing.innerRingWidth = 20
         progressRing.outerRingWidth = 20
-        progressRing.font = UIFont.boldSystemFont(ofSize: 25)
+        progressRing.font = device.isOneOf(iPhone5Devices) ? UIFont.boldSystemFont(ofSize: 20) : UIFont.boldSystemFont(ofSize: 25)
         progressRing.valueIndicator = "% spent"
         view.addSubview(progressRing)
     }
@@ -130,6 +137,21 @@ class BudgetDetailViewController: UIViewController {
         self.present(shareViewController, animated: true, completion: nil)
     }
     
+    func delete(budget: Budget) {
+        if budget.createdBy == userEmail {
+            Database.database().reference().child("budgets").child(budget.id!).removeValue() { (error, ref) in
+                if error == nil {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "Hmmm...", message: "\(budget.name!) was created by \(budget.createdBy!). Only they can delete it.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     // https://stackoverflow.com/a/39267898
     @objc func showMoreSheet() {
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -149,7 +171,7 @@ class BudgetDetailViewController: UIViewController {
         }))
         
         sheet.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction) in
-            print("User click Delete button")
+            self.delete(budget: self.budget)
         }))
         
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

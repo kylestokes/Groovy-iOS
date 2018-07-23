@@ -60,11 +60,15 @@ class AuthPickerViewController: FUIAuthPickerViewController {
         self.imageView.animation = "fadeOut"
         self.imageView.animate()
         
-        self.peaceLabel.animation = "fadeOut"
-        self.peaceLabel.animate()
+        if peaceLabel != nil {
+            self.peaceLabel.animation = "fadeOut"
+            self.peaceLabel.animate()
+        }
         
-        self.bodyText.animation = "fadeOut"
-        self.bodyText.animate()
+        if bodyText != nil {
+            self.bodyText.animation = "fadeOut"
+            self.bodyText.animate()
+        }
     }
     
     func getDevice() {
