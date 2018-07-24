@@ -9,10 +9,15 @@
 import UIKit
 import Spring
 import Pulley
+import Firebase
+import FirebaseUI
 
 class UserMenuViewController: UIViewController {
     
     // MARK: Properties
+    
+    var budget: Budget!
+    var userEmail: String!
     
     // MARK: Outlets
     
@@ -27,10 +32,21 @@ class UserMenuViewController: UIViewController {
     @IBAction func dismiss(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
+    @IBAction func signOut(_ sender: UIBarButtonItem) {
+        do {
+            try FUIAuth.defaultAuthUI()?.signOut()
+            self.dismiss(animated: true, completion: nil)
+        } catch {
+            let alert = UIAlertController(title: "Sign Out Error", message: "Unable to sign out — try again in a second", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: Life cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 }

@@ -73,10 +73,15 @@ class BudgetDetailViewController: UIViewController {
     func configProgressRing() {
         let device = Device()
         let iPhone5Devices = [Device.iPhone5, Device.iPhone5s, Device.iPhone5c, Device.simulator(Device.iPhone5), Device.simulator(Device.iPhone5s), Device.simulator(Device.iPhone5c)]
+        
+        let iPhone678Devices = [Device.iPhone6, Device.simulator(Device.iPhone6), Device.iPhone7, Device.simulator(Device.iPhone7), Device.iPhone8, Device.simulator(Device.iPhone8)]
+        
         if device.isOneOf(iPhone5Devices) {
-            progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 90, y: 120, width: 180, height: 180))
+            progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 80, y: 130, width: 160, height: 160))
+        } else if device.isOneOf(iPhone678Devices) {
+           progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 155, width: 210, height: 210))
         } else {
-           progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 190, width: 210, height: 210))
+            progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 190, width: 210, height: 210))
         }
         progressRing.innerCapStyle = .round
         progressRing.outerCapStyle = .round
@@ -86,8 +91,8 @@ class BudgetDetailViewController: UIViewController {
             UIColor(red:0.99, green:0.89, blue:0.54, alpha:1.0)             // yellow
         ]
         progressRing.outerRingColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-        progressRing.innerRingWidth = 20
-        progressRing.outerRingWidth = 20
+        progressRing.innerRingWidth = device.isOneOf(iPhone5Devices) ? 15 : 20
+        progressRing.outerRingWidth = device.isOneOf(iPhone5Devices) ? 15 : 20
         progressRing.font = device.isOneOf(iPhone5Devices) ? UIFont.boldSystemFont(ofSize: 20) : UIFont.boldSystemFont(ofSize: 25)
         progressRing.valueIndicator = "% spent"
         view.addSubview(progressRing)
@@ -139,11 +144,21 @@ class BudgetDetailViewController: UIViewController {
     
     func delete(budget: Budget) {
         if budget.createdBy == userEmail {
-            Database.database().reference().child("budgets").child(budget.id!).removeValue() { (error, ref) in
-                if error == nil {
-                    self.navigationController?.popViewController(animated: true)
+            let alert = UIAlertController(title: "Delete \(budget.name!)", message: "Are you sure you want to delete this?", preferredStyle: .actionSheet)
+            
+            alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+            
+            let delete = UIAlertAction(title: "Delete", style: .default, handler: { (delete) in
+                Database.database().reference().child("budgets").child(budget.id!).removeValue() { (error, ref) in
+                    if error == nil {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
-            }
+            })
+            alert.addAction(delete)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Hmmm...", message: "\(budget.name!) was created by \(budget.createdBy!). Only they can delete it.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)

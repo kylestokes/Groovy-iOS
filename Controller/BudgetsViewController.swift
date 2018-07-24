@@ -105,9 +105,6 @@ class BudgetsViewController: UIViewController {
         self.addBudgetButton.isHidden = false
         self.title = "Budgets"
         budgets.count == 0 ?  noBudgetLabelsHidden(false) : noBudgetLabelsHidden(true)
-        // Add 'Edit-Done' button
-        navigationItem.rightBarButtonItem = editButtonItem
-        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         // Add menu button
         configMenuButton()
     }
@@ -223,14 +220,6 @@ class BudgetsViewController: UIViewController {
             self.budgetsTable.setEditing(true, animated: true)
         } else {
             self.budgetsTable.setEditing(false, animated: true)
-        }
-    }
-    
-    func signOut() {
-        do {
-            try FUIAuth.defaultAuthUI()?.signOut()
-        } catch {
-            print("Unable to sign out: \(error)")
         }
     }
     
