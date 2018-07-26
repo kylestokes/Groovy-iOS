@@ -240,6 +240,10 @@ class BudgetsViewController: UIViewController {
             addBudgetViewController.databaseReference = databaseReference
         } else {
             // userMenuSegue
+            let userMenuNavigationController = segue.destination as! UINavigationController
+            let userMenuViewController = userMenuNavigationController.topViewController as! UserMenuViewController
+            userMenuViewController.budgets = self.budgets
+            userMenuViewController.userEmail = self.userEmail
         }
     }
     
@@ -335,6 +339,12 @@ extension BudgetsViewController: FUIAuthDelegate {
     
     func passwordRecoveryViewController(forAuthUI authUI: FUIAuth, email: String) -> FUIPasswordRecoveryViewController {
         return PasswordRecoveryViewController(nibName: "PasswordRecoveryViewController", bundle: Bundle.main, authUI: authUI, email: email)
+    }
+}
+
+extension UIResponder {
+    var parentViewController: UIViewController? {
+        return (self.next as? UIViewController) ?? self.next?.parentViewController
     }
 }
 

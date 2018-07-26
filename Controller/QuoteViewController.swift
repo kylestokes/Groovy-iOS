@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Pulley
+import Spring
 
 class QuoteViewController: UIViewController {
     
@@ -20,27 +20,27 @@ class QuoteViewController: UIViewController {
     
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var quoteTextView: UITextView!
-    @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var quotes: UIImageView!
     
-    // MARK: Actions
-    
-    @IBAction func shareQuote(_ sender: UIButton) {
-        let shareController = UIActivityViewController(activityItems: ["\(quote!) — \(author!)"], applicationActivities: nil)
-        present(shareController, animated: true, completion: nil)
-    }
-
     // MARK: Life cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configNavBar()
         getQuoteOfTheDay()
     }
     
+    func configNavBar() {
+        self.title = "Quote of the Day"
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareQuote))
+    }
+    
     func hideQuoteInterface(_ isHidden: Bool) {
+        self.quotes.isHidden = isHidden
         self.authorLabel.isHidden = isHidden
         self.quoteTextView.isHidden = isHidden
-        self.shareButton.isEnabled = !isHidden
         self.activityIndicator.isHidden = !isHidden
     }
     
@@ -69,18 +69,9 @@ class QuoteViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-}
-
-extension QuoteViewController: PulleyDrawerViewControllerDelegate {
-    func supportedDrawerPositions() -> [PulleyPosition] {
-        return [PulleyPosition.partiallyRevealed, PulleyPosition.closed, PulleyPosition.collapsed]
-    }
     
-    func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 80.0
-    }
-    
-    func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat {
-        return 300.0
+    @objc func shareQuote() {
+        let shareController = UIActivityViewController(activityItems: ["\(quote!) — \(author!)"], applicationActivities: nil)
+        present(shareController, animated: true, completion: nil)
     }
 }
