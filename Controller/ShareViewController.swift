@@ -30,8 +30,12 @@ class ShareViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func dismiss(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
-        email.resignFirstResponder()
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(getUpdatedBudget() as NSDictionary) { (error, ref) in
+            if error == nil {
+                self.email.resignFirstResponder()
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func shareBudgetOnSave(_ sender: UIBarButtonItem) {
@@ -55,10 +59,10 @@ class ShareViewController: UIViewController {
     }
     
     func configNavBar() {
-        // Owner
+        // Owner can Save to add new email
         if userEmail == budget.createdBy {
             navigationItem.rightBarButtonItem?.isEnabled = false
-            // Hide for non-owner
+            // Hide 'Save' for non-owner
         } else {
             navigationItem.rightBarButtonItem = nil
         }
@@ -107,23 +111,67 @@ class ShareViewController: UIViewController {
     func removeEmailFromSharing(_ email: String) {
         let indexOfEmailToRemove = budget.sharedWith?.index(of: email)
         budget.sharedWith?.remove(at: indexOfEmailToRemove!)
-        firebaseSave(sharedWith: budget.sharedWith!)
+        
+        if budget.sharedWith?.count == 1 {
+            // Budget is not shared
+            budget.isShared = false
+            
+            // Remove user from shared list
+            budget.sharedWith![0] = "none"
+            
+            // Enable icon
+            shareIcon.image = #imageLiteral(resourceName: "share-display")
+            shareIcon.image = shareIcon.image!.withRenderingMode(.alwaysTemplate)
+            shareIcon.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+            
+            // Hide UI
+            tableView.isHidden = true
+            shareLabel.isHidden = false
+            sharedWith.isHidden = true
+        }
+        
+        firebaseSave()
         tableView.reloadData()
     }
     
     @objc func shareBudget() {
+        
+        // If first time sharing email, add user to shared list
+        if budget.isShared == false {
+            budget.sharedWith![0] = userEmail
+        }
+        
         // Add new email
-        var sharedWith = budget.sharedWith!
-        sharedWith.append(email.text!)
-        budget.sharedWith = sharedWith
+        var sharedWithEmails = budget.sharedWith!
+        sharedWithEmails.append(email.text!)
+        budget.sharedWith = sharedWithEmails
+        
+        // Budget is now shared
+        budget.isShared = true
+        
+        // Enable new icon
+        shareIcon.image = #imageLiteral(resourceName: "share-filled")
+        shareIcon.image = shareIcon.image!.withRenderingMode(.alwaysTemplate)
+        shareIcon.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         
         // Save in Firebase
-        firebaseSave(sharedWith: sharedWith)
+        firebaseSave()
         
-        // Add email to table with animation
-        let indexOfEmailToAdd = budget.sharedWith?.index(of: email.text!)
-        let indexPath = IndexPath(item: indexOfEmailToAdd!, section: 0)
-        tableView.insertRows(at: [indexPath], with: .top)
+        // Add email to table with animation if not first budget
+        if budget.sharedWith!.count > 2 {
+            let indexOfEmailToAdd = budget.sharedWith?.index(of: email.text!)
+            let indexPath = IndexPath(item: indexOfEmailToAdd!, section: 0)
+            tableView.insertRows(at: [indexPath], with: .top)
+        } else {
+            // Add user email to first row
+            tableView.reloadData()
+        }
+
+        
+        // Show UI
+        tableView.isHidden = false
+        shareLabel.isHidden = false
+        sharedWith.isHidden = false
         
         // Reconfig email text field
         email.text = ""
@@ -133,8 +181,23 @@ class ShareViewController: UIViewController {
         saveButton.isEnabled = false
     }
     
-    func firebaseSave(sharedWith: [String]) {
-        databaseReference.child("budgets").child("\(budget.id!)").child("sharedWith").setValue(sharedWith)
+    func firebaseSave() {
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(getUpdatedBudget() as NSDictionary)
+    }
+    
+    func getUpdatedBudget() -> [String : Any] {
+        var budgetDictionary: [String:Any] = [:]
+        budgetDictionary["name"] = budget.name
+        budgetDictionary["createdBy"] = budget.createdBy
+        budgetDictionary["hiddenFrom"] = budget.hiddenFrom
+        budgetDictionary["history"] = budget.history
+        budgetDictionary["isShared"] = budget.isShared
+        budgetDictionary["left"] = budget.setAmount
+        budgetDictionary["setAmount"] = budget.setAmount
+        budgetDictionary["sharedWith"] = budget.sharedWith
+        budgetDictionary["spent"] = budget.spent
+        budgetDictionary["userDate"] = budget.userDate
+        return budgetDictionary
     }
     
     @objc func textFieldDidChange() {

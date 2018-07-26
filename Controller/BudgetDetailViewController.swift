@@ -204,6 +204,7 @@ class BudgetDetailViewController: UIViewController {
                 self.addToSpendText()
                 self.addSpentText()
                 self.addLeftToSpentAmountLabel()
+                self.configNavigationBar()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.animateToPercentageSpent()
                 }
