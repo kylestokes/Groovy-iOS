@@ -104,7 +104,15 @@ class BudgetDetailViewController: UIViewController {
     }
     
     func animateToPercentageSpent() {
-        let percentage = CGFloat((budget.spent?.rounded())!) / CGFloat((budget.setAmount?.rounded())!)
+        // Prevent divide by zero errors if user enters any value less than zero
+        var setAmount = 0.0
+        var spent = 0.0
+        setAmount = budget.setAmount! < 1.0 ? budget.setAmount! : (budget.setAmount?.rounded())!
+        spent = budget.spent! < 1.0 ? budget.spent! : (budget.spent?.rounded())!
+        var percentage = CGFloat(spent) / CGFloat(setAmount)
+        if percentage.isNaN {
+            percentage = 0
+        }
         progressRing.startProgress(to: CGFloat(percentage) * 100, duration: 2.0)
     }
     

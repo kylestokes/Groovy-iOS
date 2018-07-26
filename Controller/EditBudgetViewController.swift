@@ -78,8 +78,13 @@ class EditBudgetViewController: UIViewController {
     }
     
     func textFieldsHaveValues() -> Bool {
-        let textFieldsHaveValue = (amount.text?.count)! > 0 && (name.text?.count)! > 0 ? true : false
-        return textFieldsHaveValue
+        if amount.hasText && name.hasText {
+            let isAmountGreaterThanEqualOneCent = Double(amount.text!)! >= 0.01 ? true : false
+            let amountHasValue = (amount.text?.count)! > 0  && isAmountGreaterThanEqualOneCent ? true : false
+            return amountHasValue
+        } else {
+            return false
+        }
     }
     
     func resignAndDismiss() {

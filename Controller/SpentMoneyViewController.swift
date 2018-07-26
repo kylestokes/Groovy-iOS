@@ -77,6 +77,7 @@ class SpentMoneyViewController: UIViewController {
         budgetDictionary["userDate"] = budget.userDate
         databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
             if error == nil {
+                Haptics.doSuccessHapticFeedback()
                 self.resignAndDismiss()
             }
         }
@@ -93,8 +94,13 @@ class SpentMoneyViewController: UIViewController {
     }
     
     func amountHasValue() -> Bool {
-        let amountHasValue = (amount.text?.count)! > 0 ? true : false
-        return amountHasValue
+        if amount.hasText {
+            let isAmountGreaterThanEqualOneCent = Double(amount.text!)! >= 0.01 ? true : false
+            let amountHasValue = (amount.text?.count)! > 0  && isAmountGreaterThanEqualOneCent ? true : false
+            return amountHasValue
+        } else {
+            return false
+        }
     }
     
     // Close keyboard when tapping outside of keyboard

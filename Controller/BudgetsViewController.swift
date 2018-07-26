@@ -66,7 +66,7 @@ class BudgetsViewController: UIViewController {
                 // check if the current app user is the current Firebase user
                 if self.user != activeUser {
                     self.user = activeUser
-                    self.userEmail = user!.email!
+                    self.userEmail = user!.email!.lowercased()
                     self.observeBudgetsAdded()
                     self.observeBudgetsChanged()
                     self.observeBudgetsDeleted()
@@ -120,7 +120,6 @@ class BudgetsViewController: UIViewController {
     }
     
     func observeBudgetsAdded() {
-        let activityIndicator = ActivityIndicator.displaySpinner(onView: self.view)
         databaseReference = Database.database().reference()
         _databaseHandle = databaseReference.child("budgets").observe(.childAdded, with: { (snapshot: DataSnapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -131,7 +130,6 @@ class BudgetsViewController: UIViewController {
                     self.budgetsTable.insertRows(at: [IndexPath(row: self.budgets.count - 1, section: 0)], with: .automatic)
                     self.displayInterface()
                 }
-                ActivityIndicator.removeSpinner(spinner: activityIndicator)
             }
         })
     }
@@ -140,7 +138,6 @@ class BudgetsViewController: UIViewController {
         // https://stackoverflow.com/a/47593739
         Database.database().reference().child("budgets").observe(.childChanged, with: { (snapshot: DataSnapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
-                let activityIndicator = ActivityIndicator.displaySpinner(onView: self.view)
                 let uid = snapshot.key
                 let changedBudget = Budget.from(firebase: dictionary, uid: uid)
                 
@@ -172,8 +169,6 @@ class BudgetsViewController: UIViewController {
                     self.budgets.append(changedBudget)
                     self.budgetsTable.insertRows(at: [IndexPath(row: self.budgets.count - 1, section: 0)], with: .automatic)
                 }
-                
-                ActivityIndicator.removeSpinner(spinner: activityIndicator)
             }
         })
     }
@@ -181,7 +176,6 @@ class BudgetsViewController: UIViewController {
     func observeBudgetsDeleted() {
         Database.database().reference().child("budgets").observe(.childRemoved, with: { (snapshot: DataSnapshot) in
             if ((snapshot.value as? [String: AnyObject]) != nil) {
-                let activityIndicator = ActivityIndicator.displaySpinner(onView: self.view)
                 let uid = snapshot.key
                 for budget in self.budgets {
                     if budget.id == uid {
@@ -194,7 +188,6 @@ class BudgetsViewController: UIViewController {
                         }
                     }
                 }
-                ActivityIndicator.removeSpinner(spinner: activityIndicator)
             }
         })
     }
@@ -216,17 +209,6 @@ class BudgetsViewController: UIViewController {
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    // Edit-Done actions
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        
-        if editing {
-            self.budgetsTable.setEditing(true, animated: true)
-        } else {
-            self.budgetsTable.setEditing(false, animated: true)
         }
     }
     
@@ -281,7 +263,7 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.shareIcon.image = budgets[indexPath.row].isShared! ? #imageLiteral(resourceName: "user") : nil
         if cell.shareIcon.image != nil {
             cell.shareIcon.image = cell.shareIcon.image!.withRenderingMode(.alwaysTemplate)
-            cell.shareIcon.tintColor = UIColor(red:0.79, green:0.79, blue:0.79, alpha:1.0)
+            cell.shareIcon.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         }
         // https://stackoverflow.com/a/44752964
         cell.selectionStyle = .none
@@ -323,6 +305,7 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Haptics.doLightHapticFeedback()
         let budgetDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetDetail") as! BudgetDetailViewController
         budgetDetailViewController.budget = self.budgets[indexPath.row]
         budgetDetailViewController.userEmail = userEmail

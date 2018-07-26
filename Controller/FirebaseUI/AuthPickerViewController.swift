@@ -85,7 +85,8 @@ class AuthPickerViewController: FUIAuthPickerViewController {
         imageView = SpringImageView(image: peaceHandGradient)
         imageView.tintColor = UIColor.white
         imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 20, y: (navigationController?.navigationBar.frame.origin.y)! + 50, width: view.frame.size.width - 40, height: 200)
+        let height = device.isOneOf(devicesThatNeedAdjusting) ? 120.0 : 200.0
+        imageView.frame = CGRect(x: 20, y: (navigationController?.navigationBar.frame.origin.y)! + 50, width: view.frame.size.width - 40, height: CGFloat(height))
         imageView.animation = "fadeInUp"
         imageView.duration = 2
         imageView.animate()
@@ -93,36 +94,36 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     }
     
     func addPeaceText() {
-        if !device.isOneOf(devicesThatNeedAdjusting) {
-            peaceLabel = SpringLabel(frame: CGRect(x: 0, y: (navigationController?.navigationBar.frame.origin.y)! + 270, width: view.frame.size.width, height: 50))
-            peaceLabel.text = "Peace."
-            peaceLabel.textAlignment = .center
-            peaceLabel.font = UIFont.boldSystemFont(ofSize: 50)
-            peaceLabel.textColor = UIColor.white
-            peaceLabel.animation = "fadeIn"
-            peaceLabel.duration = 2
-            // Animate after 0.5 seconds
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.peaceLabel.animate()
-                self.view.addSubview(self.peaceLabel)
-            }
+        let y = device.isOneOf(devicesThatNeedAdjusting) ? 190.0 : 270.0
+        peaceLabel = SpringLabel(frame: CGRect(x: 0, y: (navigationController?.navigationBar.frame.origin.y)! + CGFloat(y), width: view.frame.size.width, height: 50))
+        peaceLabel.text = "Peace."
+        peaceLabel.textAlignment = .center
+        let fontSize = device.isOneOf(devicesThatNeedAdjusting) ? 35.0 : 50.0
+        peaceLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(fontSize))
+        peaceLabel.textColor = UIColor.white
+        peaceLabel.animation = "fadeIn"
+        peaceLabel.duration = 2
+        // Animate after 0.5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.peaceLabel.animate()
+            self.view.addSubview(self.peaceLabel)
         }
     }
     
     func addBodyText() {
-        if !device.isOneOf(devicesThatNeedAdjusting) {
-            bodyText = SpringLabel(frame: CGRect(x: 0, y: (navigationController?.navigationBar.frame.origin.y)! + 320, width: view.frame.size.width, height: 50))
-            bodyText.text = "Enjoy money mindfulness"
-            bodyText.textAlignment = .center
-            bodyText.font = UIFont.systemFont(ofSize: 20)
-            bodyText.textColor = UIColor.white
-            bodyText.animation = "fadeIn"
-            bodyText.duration = 2
-            // Animate after 0.5 seconds
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.bodyText.animate()
-                self.view.addSubview(self.bodyText)
-            }
+        let y = device.isOneOf(devicesThatNeedAdjusting) ? 230.0 : 320.0
+        bodyText = SpringLabel(frame: CGRect(x: 0, y: (navigationController?.navigationBar.frame.origin.y)! + CGFloat(y), width: view.frame.size.width, height: 50))
+        bodyText.text = "Enjoy money mindfulness"
+        bodyText.textAlignment = .center
+        let fontSize = device.isOneOf(devicesThatNeedAdjusting) ? 18.0 : 20.0
+        bodyText.font = UIFont.systemFont(ofSize: CGFloat(fontSize))
+        bodyText.textColor = UIColor.white
+        bodyText.animation = "fadeIn"
+        bodyText.duration = 2
+        // Animate after 0.5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.bodyText.animate()
+            self.view.addSubview(self.bodyText)
         }
     }
     

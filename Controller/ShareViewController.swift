@@ -138,12 +138,12 @@ class ShareViewController: UIViewController {
         
         // If first time sharing email, add user to shared list
         if budget.isShared == false {
-            budget.sharedWith![0] = userEmail
+            budget.sharedWith![0] = userEmail.lowercased()
         }
         
         // Add new email
         var sharedWithEmails = budget.sharedWith!
-        sharedWithEmails.append(email.text!)
+        sharedWithEmails.append(email.text!.lowercased())
         budget.sharedWith = sharedWithEmails
         
         // Budget is now shared
@@ -192,7 +192,7 @@ class ShareViewController: UIViewController {
         budgetDictionary["hiddenFrom"] = budget.hiddenFrom
         budgetDictionary["history"] = budget.history
         budgetDictionary["isShared"] = budget.isShared
-        budgetDictionary["left"] = budget.setAmount
+        budgetDictionary["left"] = budget.left
         budgetDictionary["setAmount"] = budget.setAmount
         budgetDictionary["sharedWith"] = budget.sharedWith
         budgetDictionary["spent"] = budget.spent

@@ -35,7 +35,7 @@ class HistoryEditViewController: UIViewController {
     func configNavBar() {
         self.title = "Edit purchase"
         saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(save))
-        saveButton.isEnabled = textFieldsHaveValues()
+        saveButton.isEnabled = amountHasValue()
         navigationItem.rightBarButtonItem = saveButton
     }
     
@@ -72,9 +72,14 @@ class HistoryEditViewController: UIViewController {
         return currency
     }
     
-    func textFieldsHaveValues() -> Bool {
-        let textFieldsHaveValue = (amount.text?.count)! > 0 ? true : false
-        return textFieldsHaveValue
+    func amountHasValue() -> Bool {
+        if amount.hasText {
+            let isAmountGreaterThanEqualOneCent = Double(amount.text!)! >= 0.01 ? true : false
+            let amountHasValue = (amount.text?.count)! > 0  && isAmountGreaterThanEqualOneCent ? true : false
+            return amountHasValue
+        } else {
+            return false
+        }
     }
     
     @objc func save() {
@@ -90,13 +95,13 @@ class HistoryEditViewController: UIViewController {
     }
     
     @objc func textFieldDidChange() {
-        saveButton.isEnabled = textFieldsHaveValues()
+        saveButton.isEnabled = amountHasValue()
     }
 }
 
 extension HistoryEditViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textFieldsHaveValues() {
+        if amountHasValue() {
             save()
         }
         return true

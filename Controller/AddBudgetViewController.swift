@@ -64,7 +64,8 @@ class AddBudgetViewController: UIViewController {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         if budgetName.hasText && budgetAmount.hasText {
-            save.isEnabled = true
+            let isAmountGreaterThanEqualOneCent = Double(budgetAmount.text!)! >= 0.01 ? true : false
+            save.isEnabled = isAmountGreaterThanEqualOneCent ? true : false
         } else {
             save.isEnabled = false
         }
@@ -83,6 +84,7 @@ class AddBudgetViewController: UIViewController {
         budgetData["history"] = ["none:none"]
         budgetData["userDate"] = ["none:none"]
         databaseReference.child("budgets").childByAutoId().setValue(budgetData)
+        Haptics.doSuccessHapticFeedback()
         self.dismiss(animated: true, completion: nil)
     }
 }
