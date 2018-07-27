@@ -27,8 +27,8 @@ class BudgetsViewController: UIViewController {
     
     @IBOutlet weak var budgetsTable: UITableView!
     @IBOutlet weak var addBudgetButton: UIButton!
-    @IBOutlet weak var noBudgetsLabel: UILabel!
-    @IBOutlet weak var createOneLabel: UILabel!
+    @IBOutlet weak var createOneLabel: SpringLabel!
+    @IBOutlet weak var noBudgetsLabel: SpringLabel!
     
     // MARK: Actions
     
@@ -72,7 +72,7 @@ class BudgetsViewController: UIViewController {
                     self.observeBudgetsDeleted()
                     self.configMenuButton()
                     // Prevent flash of "no budgets" label by waiting until Firebase retrieves budgets
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.displayInterface()
                     }
                 }
@@ -112,11 +112,11 @@ class BudgetsViewController: UIViewController {
         self.addBudgetButton.isHidden = false
         self.title = "Budgets"
         if budgets.count == 0 {
-            noBudgetLabelsHidden(false)
             budgetsTable.isHidden = true
+            noBudgetLabelsHidden(false)
         } else {
-            noBudgetLabelsHidden(true)
             budgetsTable.isHidden = false
+            noBudgetLabelsHidden(true)
         }
     }
     
@@ -128,6 +128,14 @@ class BudgetsViewController: UIViewController {
     func noBudgetLabelsHidden(_ isHidden: Bool) {
         self.noBudgetsLabel.isHidden = isHidden
         self.createOneLabel.isHidden = isHidden
+        
+        // Fade in "No budget" labels when needed
+        if isHidden == false {
+            self.noBudgetsLabel.animation = "fadeIn"
+            self.noBudgetsLabel.animate()
+            self.createOneLabel.animation = "fadeIn"
+            self.createOneLabel.animate()
+        }
     }
     
     func authenticateUser() {

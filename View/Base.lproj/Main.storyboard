@@ -19,13 +19,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No budgets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wO2-qW-Nrj">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No budgets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wO2-qW-Nrj" customClass="SpringLabel" customModule="Spring">
                                 <rect key="frame" x="16" y="392.66666666666669" width="343" height="27"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create one to get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFd-fz-UbN">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create one to get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFd-fz-UbN" customClass="SpringLabel" customModule="Spring">
                                 <rect key="frame" x="16" y="421.66666666666669" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -138,8 +138,8 @@
                     <connections>
                         <outlet property="addBudgetButton" destination="Ugs-BE-1t4" id="FNm-BG-D39"/>
                         <outlet property="budgetsTable" destination="3ih-GJ-RwO" id="QNd-1Z-WHy"/>
-                        <outlet property="createOneLabel" destination="UFd-fz-UbN" id="nWQ-Mx-Ka2"/>
-                        <outlet property="noBudgetsLabel" destination="wO2-qW-Nrj" id="qgh-NT-unE"/>
+                        <outlet property="createOneLabel" destination="UFd-fz-UbN" id="wZy-MR-FvM"/>
+                        <outlet property="noBudgetsLabel" destination="wO2-qW-Nrj" id="SfP-tp-8SJ"/>
                         <segue destination="JRW-5F-AK4" kind="presentation" identifier="userMenuSegue" id="sXy-xU-har"/>
                     </connections>
                 </viewController>
