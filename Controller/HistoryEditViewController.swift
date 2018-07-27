@@ -75,7 +75,8 @@ class HistoryEditViewController: UIViewController {
     func amountHasValue() -> Bool {
         if amount.hasText {
             let isAmountGreaterThanEqualOneCent = Double(amount.text!)! >= 0.01 ? true : false
-            let amountHasValue = (amount.text?.count)! > 0  && isAmountGreaterThanEqualOneCent ? true : false
+            let isAmountGreaterThanFiveMillion = Double(amount.text!)! > 5000000 ? true : false
+            let amountHasValue = (amount.text?.count)! > 0  && isAmountGreaterThanEqualOneCent && !isAmountGreaterThanFiveMillion ? true : false
             return amountHasValue
         } else {
             return false

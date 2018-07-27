@@ -65,7 +65,8 @@ class AddBudgetViewController: UIViewController {
     @objc func textFieldDidChange(_ textField: UITextField) {
         if budgetName.hasText && budgetAmount.hasText {
             let isAmountGreaterThanEqualOneCent = Double(budgetAmount.text!)! >= 0.01 ? true : false
-            save.isEnabled = isAmountGreaterThanEqualOneCent ? true : false
+            let isAmountGreaterThanFiveMillion = Double(budgetAmount.text!)! > 5000000 ? true : false
+            save.isEnabled = isAmountGreaterThanEqualOneCent && !isAmountGreaterThanFiveMillion ? true : false
         } else {
             save.isEnabled = false
         }
