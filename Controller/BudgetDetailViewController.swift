@@ -152,7 +152,7 @@ class BudgetDetailViewController: UIViewController {
     
     func delete(budget: Budget) {
         if budget.createdBy == userEmail {
-            let alert = UIAlertController(title: "Delete \(budget.name!)", message: "Are you sure you want to delete this?", preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Delete \(budget.name!)", message: "Are you sure you want to delete this budget?", preferredStyle: .actionSheet)
             
             alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
             

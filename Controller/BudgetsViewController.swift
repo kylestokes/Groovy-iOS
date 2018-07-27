@@ -273,7 +273,7 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let budgetToDelete = budgets[indexPath.row]
-            let alert = UIAlertController(title: "Delete \(budgetToDelete.name!)", message: "Are you sure you want to delete this?", preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Delete \(budgetToDelete.name!)", message: "Are you sure you want to delete this budget?", preferredStyle: .actionSheet)
             
             alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
             
@@ -297,7 +297,28 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         deleteButton.backgroundColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-        return [deleteButton]
+        
+        let editButton = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
+            let editBudgetViewController = self.storyboard?.instantiateViewController(withIdentifier: "editBudget") as! EditBudgetViewController
+            editBudgetViewController.budget = self.budgets[indexPath.row]
+            editBudgetViewController.userEmail = self.userEmail
+            editBudgetViewController.databaseReference = self.databaseReference
+            self.present(editBudgetViewController, animated: true, completion: nil)
+        }
+        
+        let shareButton = UITableViewRowAction(style: .default, title: "Share") { (action, indexPath) in
+            let shareBudgetViewController = self.storyboard?.instantiateViewController(withIdentifier: "shareBudget") as! ShareViewController
+            shareBudgetViewController.budget = self.budgets[indexPath.row]
+            shareBudgetViewController.userEmail = self.userEmail
+            shareBudgetViewController.databaseReference = self.databaseReference
+            self.present(shareBudgetViewController, animated: true, completion: nil)
+        }
+        
+        deleteButton.backgroundColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+        editButton.backgroundColor = UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0)
+        shareButton.backgroundColor = UIColor(red:0.24, green:0.44, blue:0.65, alpha:1.0)
+        
+        return [deleteButton, shareButton, editButton]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

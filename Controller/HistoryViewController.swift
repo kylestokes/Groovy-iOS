@@ -249,7 +249,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
             self.tableView.dataSource?.tableView!(self.tableView, commit: .none, forRowAt: indexPath)
             return
         }
-        editButton.backgroundColor = UIColor.lightGray
+        editButton.backgroundColor = UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0)
         
         return [deleteButton, editButton]
     }
