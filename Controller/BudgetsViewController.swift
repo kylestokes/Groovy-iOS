@@ -71,7 +71,10 @@ class BudgetsViewController: UIViewController {
                     self.observeBudgetsChanged()
                     self.observeBudgetsDeleted()
                     self.configMenuButton()
-                    self.displayInterface()
+                    // Prevent flash of "no budgets" label by waiting until Firebase retrieves budgets
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.displayInterface()
+                    }
                 }
             } else {
                 // Hide UI if no authorized user
