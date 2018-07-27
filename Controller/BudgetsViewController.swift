@@ -70,8 +70,12 @@ class BudgetsViewController: UIViewController {
                     self.observeBudgetsAdded()
                     self.observeBudgetsChanged()
                     self.observeBudgetsDeleted()
+                    self.configMenuButton()
+                    self.displayInterface()
                 }
             } else {
+                // Hide UI if no authorized user
+                self.hideUserInterface()
                 // Allow user to authenticate if not already signed in
                 self.authenticateUser()
             }
@@ -104,9 +108,18 @@ class BudgetsViewController: UIViewController {
     func displayInterface() {
         self.addBudgetButton.isHidden = false
         self.title = "Budgets"
-        budgets.count == 0 ?  noBudgetLabelsHidden(false) : noBudgetLabelsHidden(true)
-        // Add menu button
-        configMenuButton()
+        if budgets.count == 0 {
+            noBudgetLabelsHidden(false)
+            budgetsTable.isHidden = true
+        } else {
+            noBudgetLabelsHidden(true)
+            budgetsTable.isHidden = false
+        }
+    }
+    
+    func hideUserInterface() {
+        self.title = "Budgets"
+        self.budgetsTable.isHidden = true
     }
     
     func noBudgetLabelsHidden(_ isHidden: Bool) {
@@ -263,7 +276,7 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.shareIcon.image = budgets[indexPath.row].isShared! ? #imageLiteral(resourceName: "user") : nil
         if cell.shareIcon.image != nil {
             cell.shareIcon.image = cell.shareIcon.image!.withRenderingMode(.alwaysTemplate)
-            cell.shareIcon.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
+            cell.shareIcon.tintColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
         }
         // https://stackoverflow.com/a/44752964
         cell.selectionStyle = .none

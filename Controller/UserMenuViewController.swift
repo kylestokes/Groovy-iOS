@@ -22,6 +22,7 @@ class UserMenuViewController: UIViewController {
     
     @IBOutlet weak var userName: SpringLabel!
     @IBOutlet weak var numberOfBudgets: SpringLabel!
+    @IBOutlet weak var budgetLabel: SpringLabel!
     @IBOutlet weak var amountSpent: SpringLabel!
     @IBOutlet weak var totalAmount: SpringLabel!
     @IBOutlet weak var amountLeft: SpringLabel!
@@ -56,6 +57,7 @@ class UserMenuViewController: UIViewController {
         configNavBar()
         configDisplayName()
         configNumberOfBudgets()
+        configBudgetsLabel()
         configAmountSpent()
         configTotalAmount()
         configAmountLeft()
@@ -87,6 +89,10 @@ class UserMenuViewController: UIViewController {
             numberOfBudgetsForUser += 1
         }
         numberOfBudgets.text = String(numberOfBudgetsForUser)
+    }
+    
+    func configBudgetsLabel() {
+        budgetLabel.text = budgets.count == 1 ? "budget" : "budgets"
     }
     
     func configAmountSpent() {
