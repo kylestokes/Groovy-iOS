@@ -110,9 +110,19 @@ class BudgetDetailViewController: UIViewController {
         setAmount = budget.setAmount! < 1.0 ? budget.setAmount! : (budget.setAmount?.rounded())!
         spent = budget.spent! < 1.0 ? budget.spent! : (budget.spent?.rounded())!
         var percentage = CGFloat(spent) / CGFloat(setAmount)
+        
         if percentage.isNaN {
             percentage = 0
         }
+        
+        // Percentage is greater than 500%
+        if percentage > 5 {
+            percentage = 5
+            progressRing.valueIndicator = "+ %"
+        } else {
+            progressRing.valueIndicator = "% spent"
+        }
+        
         progressRing.startProgress(to: CGFloat(percentage) * 100, duration: 2.0)
     }
     
