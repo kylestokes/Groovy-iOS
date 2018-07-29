@@ -72,7 +72,7 @@ class BudgetDetailViewController: UIViewController {
     
     func configProgressRing() {
         let device = Device()
-        let iPhone5Devices = [Device.iPhone5, Device.iPhone5s, Device.iPhone5c, Device.simulator(Device.iPhone5), Device.simulator(Device.iPhone5s), Device.simulator(Device.iPhone5c)]
+        let iPhone5Devices = [Device.iPhone5, Device.iPhone5s, Device.iPhone5c, Device.iPhoneSE, Device.simulator(Device.iPhone5), Device.simulator(Device.iPhone5s), Device.simulator(Device.iPhone5c),Device.simulator(Device.iPhoneSE)]
         
         let iPhone678Devices = [Device.iPhone6, Device.simulator(Device.iPhone6), Device.iPhone7, Device.simulator(Device.iPhone7), Device.iPhone8, Device.simulator(Device.iPhone8)]
         
