@@ -1,12 +1,10 @@
-﻿
+
 <img width="100" alt="icon" src="/Screenshots/icon.png ">
 
-# Groovy ✌🏼
+# Groovy
 
-Money mindfulness
-
-
-## 👀
+Enjoy money mindfulness ✌🏼
+<br/>
 
 <img width="404" alt="auth" src="/Screenshots/auth.png ">
 
@@ -67,7 +65,7 @@ Groovy ❤️'s the amazing iOS community.
 * [UICircularProgressRing](https://cocoapods.org/pods/UICircularProgressRing)
   
 ## Network
-* Groovy uses the Firebase Realtime Database to store data locally and in the cloud.  Firebase uses web sockets to make sure everything is in sync in realtime. When you or a friend make a change to a shared budget, everyone will see the updates instantly. It's pretty amazing.
+* Groovy uses the [Firebase Realtime Database](https://firebase.google.com/docs/database/) to store data locally and in the cloud.  Firebase uses web sockets to make sure everything is in sync in realtime. When you or a friend make a change to a shared budget, everyone will see the updates instantly. It's pretty amazing.
 
 * Groovy uses the [Quotes REST API](https://quotes.rest) to get a daily inspirational quote to make sure you're staying motivated.
 
