@@ -251,21 +251,12 @@ extension ShareViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let emailToDelete = budget.sharedWith![indexPath.row]
-            
-            let alert = UIAlertController(title: "Remove \(emailToDelete)?", message: "Removing \(emailToDelete) will no longer allow them to see this budget", preferredStyle: .actionSheet)
-            
-            alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-            
             let deleteAction = UIAlertAction(title: "Remove", style: .default, handler: { (email) in
                 self.removeEmailFromSharing(emailToDelete)
             })
-            
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
-            alert.addAction(deleteAction)
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
+            let actions = [deleteAction, cancelAction]
+            showActionSheetAlert(title: "Remove \(emailToDelete)?", message: "Removing \(emailToDelete) will no longer allow them to see this budget", actions: actions)
         }
     }
     

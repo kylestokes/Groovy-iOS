@@ -221,17 +221,12 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
             let note = noteSubstring
             let deleteMessage = note == "" ? "Are you sure you want to delete this purchase?" : "Are you sure you want to delete '\(note)'?"
             
-            let alert = UIAlertController(title: "Delete \(amountCurrency) Purchase", message: "\(deleteMessage)", preferredStyle: .actionSheet)
-            
-            alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-            
             let deleteAction = UIAlertAction(title: "Delete", style: .default, handler: { (delete) in
                 self.deleteHistory(purchase: historyItemToDelete)
             })
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(deleteAction)
-            alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
+            let actions = [deleteAction, cancelAction]
+            showActionSheetAlert(title: "Delete \(amountCurrency) Purchase", message: "\(deleteMessage)", actions: actions)
         } else {
             let historyItemToEdit = budgetHistory[indexPath.row]
             self.editHistory(purchase: historyItemToEdit)

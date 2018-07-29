@@ -229,10 +229,8 @@ class BudgetsViewController: UIViewController {
                 }
             }
         } else {
-            let alert = UIAlertController(title: "Hmmm...", message: "\(budget.name!) was created by \(budget.createdBy!). Only they can delete it.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
+            showActionSheetAlert(title: "Hmmm...", message: "'\(budget.name!)' was created by \(budget.createdBy!). Only they can delete it.", actions: [okAction])
         }
     }
     
@@ -287,7 +285,7 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.shareIcon.image = budgets[indexPath.row].isShared! ? #imageLiteral(resourceName: "user") : nil
         if cell.shareIcon.image != nil {
             cell.shareIcon.image = cell.shareIcon.image!.withRenderingMode(.alwaysTemplate)
-            cell.shareIcon.tintColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
+            cell.shareIcon.tintColor = UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0)
         }
         // https://stackoverflow.com/a/44752964
         cell.selectionStyle = .none
@@ -297,9 +295,6 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let budgetToDelete = budgets[indexPath.row]
-            let alert = UIAlertController(title: "Delete \(budgetToDelete.name!)", message: "Are you sure you want to delete this budget?", preferredStyle: .actionSheet)
-            
-            alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
             
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (delete) in
                 self.delete(budget: budgetToDelete)
@@ -307,11 +302,8 @@ extension BudgetsViewController: UITableViewDelegate, UITableViewDataSource {
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (cancel) in
                 self.dismiss(animated: true, completion: nil)
             })
-            
-            alert.addAction(deleteAction)
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
+            let actions = [deleteAction, cancelAction]
+            showActionSheetAlert(title: "Delete \(budgetToDelete.name!)", message: "Are you sure you want to delete this budget?", actions: actions)
         }
     }
     

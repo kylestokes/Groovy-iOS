@@ -162,10 +162,6 @@ class BudgetDetailViewController: UIViewController {
     
     func delete(budget: Budget) {
         if budget.createdBy == userEmail {
-            let alert = UIAlertController(title: "Delete \(budget.name!)", message: "Are you sure you want to delete this budget?", preferredStyle: .actionSheet)
-            
-            alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-            
             let delete = UIAlertAction(title: "Delete", style: .default, handler: { (delete) in
                 Database.database().reference().child("budgets").child(budget.id!).removeValue() { (error, ref) in
                     if error == nil {
@@ -173,43 +169,38 @@ class BudgetDetailViewController: UIViewController {
                     }
                 }
             })
-            alert.addAction(delete)
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(cancel)
-            self.present(alert, animated: true, completion: nil)
+            let actions = [delete, cancel]
+            showActionSheetAlert(title: "Delete \(budget.name!)", message: "Are you sure you want to delete this budget?", actions: actions)
         } else {
-            let alert = UIAlertController(title: "Hmmm...", message: "\(budget.name!) was created by \(budget.createdBy!). Only they can delete it.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
+            showActionSheetAlert(title: "Hmmm...", message: "'\(budget.name!)' was created by \(budget.createdBy!). Only they can delete it.", actions: [okAction])
         }
     }
     
     // https://stackoverflow.com/a/39267898
     @objc func showMoreSheet() {
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        sheet.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-        
-        sheet.addAction(UIAlertAction(title: "History", style: .default , handler:{ (UIAlertAction) in
+        let history = UIAlertAction(title: "History", style: .default , handler:{ (UIAlertAction) in
             self.performSegue(withIdentifier: "showHistorySegue", sender: self)
-        }))
+        })
         
-        sheet.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction) in
+        let edit = UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction) in
             let editBudgetViewController = self.storyboard?.instantiateViewController(withIdentifier: "editBudget") as! EditBudgetViewController
             editBudgetViewController.databaseReference = self.databaseReference
             editBudgetViewController.budget = self.budget
             editBudgetViewController.userEmail = self.userEmail
             self.present(editBudgetViewController, animated: true, completion: nil)
-        }))
+        })
         
-        sheet.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction) in
+        let delete = UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction) in
             self.delete(budget: self.budget)
-        }))
+        })
         
-        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        self.present(sheet, animated: true, completion: nil)
+        let actions = [history, edit, delete, cancel]
+        showActionSheetAlert(title: nil, message: nil, actions: actions)
     }
     
     func getBudgetFromFirebase() {

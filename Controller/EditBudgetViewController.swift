@@ -95,17 +95,12 @@ class EditBudgetViewController: UIViewController {
     }
     
     func showResetAlert() {
-        let alert = UIAlertController(title: "Reset \(name.text!)", message: "Resetting \(name.text!) will remove all purchase history and set spending back to $0.00", preferredStyle: .actionSheet)
-        
-        alert.view.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-        
         let deleteAction = UIAlertAction(title: "Reset", style: .default, handler: { (delete) in
             self.resetBudget()
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(deleteAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
+        let actions = [deleteAction, cancelAction]
+        showActionSheetAlert(title: "Reset \(name.text!)", message: "Resetting \(name.text!) will remove all purchase history and set spending back to $0.00", actions: actions)
     }
     
     func resetBudget() {
