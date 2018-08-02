@@ -18,7 +18,8 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     var peaceLabel: SpringLabel!
     var bodyText: SpringLabel!
     var device: Device!
-    let devicesThatNeedAdjusting = [Device.iPhone4, Device.iPhone4s, Device.iPhone5, Device.iPhone5s, Device.iPhone5c, Device.iPhoneSE, Device.simulator(Device.iPhone5s), Device.simulator(Device.iPhoneSE)]
+    let iphonesThatNeedAdjusting = [Device.iPhone4, Device.iPhone4s, Device.iPhone5, Device.iPhone5s, Device.iPhone5c, Device.iPhoneSE, Device.simulator(Device.iPhone5s), Device.simulator(Device.iPhoneSE)]
+    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: Life Cycle
     
@@ -78,6 +79,8 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     
     
     func addLavaLampIcon() {
+        var height: Int
+        var y: Int
         let peaceHandOriginal = UIImage(named: "lava")
         // apply color to peace image
         // https://stackoverflow.com/a/27163581
@@ -85,8 +88,14 @@ class AuthPickerViewController: FUIAuthPickerViewController {
         imageView = SpringImageView(image: peaceHandGradient)
         imageView.tintColor = UIColor.white
         imageView.contentMode = .scaleAspectFit
-        let height = device.isOneOf(devicesThatNeedAdjusting) ? 120.0 : 200.0
-        imageView.frame = CGRect(x: 20, y: (navigationController?.navigationBar.frame.origin.y)! + 50, width: view.frame.size.width - 40, height: CGFloat(height))
+        if device.isOneOf(iPadsThatNeedAdjusting) {
+            height = 75
+            y = 25
+        } else {
+            height = device.isOneOf(iphonesThatNeedAdjusting) ? 120 : 200
+            y = 50
+        }
+        imageView.frame = CGRect(x: 20, y: (navigationController?.navigationBar.frame.origin.y)! + CGFloat(y), width: view.frame.size.width - 40, height: CGFloat(height))
         imageView.animation = "fadeInUp"
         imageView.duration = 2
         imageView.animate()
@@ -94,11 +103,19 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     }
     
     func addPeaceText() {
-        let y = device.isOneOf(devicesThatNeedAdjusting) ? 190.0 : 270.0
+        var y: Int
+        var fontSize: Int
+        
+        if device.isOneOf(iPadsThatNeedAdjusting) {
+            y = 110
+            fontSize = 34
+        } else {
+            y = device.isOneOf(iphonesThatNeedAdjusting) ? 190 : 270
+            fontSize = device.isOneOf(iphonesThatNeedAdjusting) ? 35 : 50
+        }
         peaceLabel = SpringLabel(frame: CGRect(x: 0, y: (navigationController?.navigationBar.frame.origin.y)! + CGFloat(y), width: view.frame.size.width, height: 50))
         peaceLabel.text = "Peace."
         peaceLabel.textAlignment = .center
-        let fontSize = device.isOneOf(devicesThatNeedAdjusting) ? 35.0 : 50.0
         peaceLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(fontSize))
         peaceLabel.textColor = UIColor.white
         peaceLabel.animation = "fadeIn"
@@ -111,11 +128,19 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     }
     
     func addBodyText() {
-        let y = device.isOneOf(devicesThatNeedAdjusting) ? 230.0 : 320.0
+        var y: Int
+        var fontSize: Int
+        
+        if device.isOneOf(iPadsThatNeedAdjusting) {
+            y = 145
+            fontSize = 16
+        } else {
+            y = device.isOneOf(iphonesThatNeedAdjusting) ? 230 : 320
+            fontSize = device.isOneOf(iphonesThatNeedAdjusting) ? 18 : 20
+        }
         bodyText = SpringLabel(frame: CGRect(x: 0, y: (navigationController?.navigationBar.frame.origin.y)! + CGFloat(y), width: view.frame.size.width, height: 50))
         bodyText.text = "Enjoy money mindfulness"
         bodyText.textAlignment = .center
-        let fontSize = device.isOneOf(devicesThatNeedAdjusting) ? 18.0 : 20.0
         bodyText.font = UIFont.systemFont(ofSize: CGFloat(fontSize))
         bodyText.textColor = UIColor.white
         bodyText.animation = "fadeIn"

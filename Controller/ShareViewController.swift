@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import Spring
+import DeviceKit
 
 class ShareViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class ShareViewController: UIViewController {
     var databaseReference: DatabaseReference!
     var budget: Budget!
     var userEmail: String!
+    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: - Outlets
     
@@ -51,11 +53,17 @@ class ShareViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
         configNavBar()
         configShareIcon()
         animateShareIcon()
         configShareLabel()
         configTableView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeToKeyboardNotifications()
     }
     
     func configNavBar() {
@@ -209,6 +217,37 @@ class ShareViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    func unsubscribeToKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        let device = Device()
+        // Only move view if editing bottom textfield
+        if self.email.isEditing && device.isOneOf(iPadsThatNeedAdjusting) {
+            view.frame.origin.y -= getKeyboardHeight(notification)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        let device = Device()
+        if device.isOneOf(iPadsThatNeedAdjusting) {
+            view.frame.origin.y = 0
+        }
+    }
+    
+    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height / 2
     }
     
 }

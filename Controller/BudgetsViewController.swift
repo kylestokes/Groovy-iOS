@@ -176,6 +176,7 @@ class BudgetsViewController: UIViewController {
                             if !(changedBudget.sharedWith?.contains(self.userEmail))! && changedBudget.createdBy != self.userEmail {
                                 self.budgets.remove(at: index)
                                 self.budgetsTable.deleteRows(at: [indexPath], with: .bottom)
+                                self.displayInterface()
                                 
                                 // Budget got edited so update it
                             } else {

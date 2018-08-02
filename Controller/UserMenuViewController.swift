@@ -10,6 +10,7 @@ import UIKit
 import Spring
 import Firebase
 import FirebaseUI
+import DeviceKit
 
 class UserMenuViewController: UIViewController {
     
@@ -17,6 +18,8 @@ class UserMenuViewController: UIViewController {
     
     var budgets: [Budget]!
     var userEmail: String!
+    var device: Device!
+    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: Outlets
     
@@ -26,6 +29,7 @@ class UserMenuViewController: UIViewController {
     @IBOutlet weak var amountSpent: SpringLabel!
     @IBOutlet weak var totalAmount: SpringLabel!
     @IBOutlet weak var amountLeft: SpringLabel!
+    @IBOutlet weak var leftToSpend: SpringLabel!
     @IBOutlet weak var quoteButton: SpringButton!
     
     // MARK: Actions
@@ -54,6 +58,7 @@ class UserMenuViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configDevice()
         configNavBar()
         configDisplayName()
         configNumberOfBudgets()
@@ -74,6 +79,10 @@ class UserMenuViewController: UIViewController {
         return currency
     }
     
+    func configDevice() {
+        device = Device()
+    }
+    
     func configNavBar() {
         self.navigationController?.navigationBar.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
     }
@@ -81,6 +90,7 @@ class UserMenuViewController: UIViewController {
     func configDisplayName() {
         let displayName = String(userEmail.split(separator: "@")[0])
         userName.text = displayName
+        userName.font =  device.isOneOf(iPadsThatNeedAdjusting) ? UIFont.systemFont(ofSize: 14.0) : UIFont.boldSystemFont(ofSize: 17.0)
     }
     
     func configNumberOfBudgets() {
@@ -89,6 +99,7 @@ class UserMenuViewController: UIViewController {
             numberOfBudgetsForUser += 1
         }
         numberOfBudgets.text = String(numberOfBudgetsForUser)
+        numberOfBudgets.font =  device.isOneOf(iPadsThatNeedAdjusting) ? UIFont.boldSystemFont(ofSize: 20.0) : UIFont.boldSystemFont(ofSize: 45.0)
     }
     
     func configBudgetsLabel() {
@@ -101,6 +112,7 @@ class UserMenuViewController: UIViewController {
             amountSpentForUser += budget.spent!
         }
         amountSpent.text = formatAsCurrency(amountSpentForUser)
+        amountSpent.font =  device.isOneOf(iPadsThatNeedAdjusting) ? UIFont.boldSystemFont(ofSize: 20.0) : UIFont.boldSystemFont(ofSize: 35.0)
     }
     
     func configTotalAmount() {
@@ -117,6 +129,7 @@ class UserMenuViewController: UIViewController {
             amountLeftForUser += budget.left!
         }
         amountLeft.text = formatAsCurrency(amountLeftForUser)
+        amountLeft.font =  device.isOneOf(iPadsThatNeedAdjusting) ? UIFont.boldSystemFont(ofSize: 20.0) : UIFont.boldSystemFont(ofSize: 35.0)
     }
     
     func configQuoteButton() {

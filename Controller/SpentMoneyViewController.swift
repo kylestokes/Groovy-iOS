@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import DeviceKit
 
 class SpentMoneyViewController: UIViewController {
     
@@ -16,6 +17,7 @@ class SpentMoneyViewController: UIViewController {
     var databaseReference: DatabaseReference!
     var budget: Budget!
     var userEmail: String!
+    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: - Outlets
     
@@ -49,9 +51,13 @@ class SpentMoneyViewController: UIViewController {
     }
     
     func configNoteTextField() {
+        let device = Device()
         note.delegate = self
         note.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         note.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        if device.isOneOf(iPadsThatNeedAdjusting) {
+            note.autocorrectionType = .no
+        }
     }
     
     func addPurchase() {

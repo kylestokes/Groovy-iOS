@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import DeviceKit
 
 class AddBudgetViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class AddBudgetViewController: UIViewController {
     
     var databaseReference: DatabaseReference!
     var userEmail: String!
+    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: - Outlets
     
@@ -51,8 +53,12 @@ class AddBudgetViewController: UIViewController {
     }
     
     func configTextFields() {
+        let device = Device()
         budgetName.becomeFirstResponder()
         budgetName.delegate = self
+        if device.isOneOf(iPadsThatNeedAdjusting) {
+            budgetName.autocorrectionType = .no
+        }
         budgetName.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
         budgetAmount.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
         budgetAmount.delegate = self
@@ -100,7 +106,7 @@ extension AddBudgetViewController: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-       // Only allow numbers and 1 decimal in amount text field
+        // Only allow numbers and 1 decimal in amount text field
         // https://stackoverflow.com/a/48093890
         if textField.keyboardType == .decimalPad {
             let s = NSString(string: textField.text ?? "").replacingCharacters(in: range, with: string)

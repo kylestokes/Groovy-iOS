@@ -1056,6 +1056,7 @@
                         <outlet property="amountLeft" destination="A4v-9G-27L" id="Ijn-NH-2g3"/>
                         <outlet property="amountSpent" destination="mkl-0Z-0br" id="uVK-2f-DGf"/>
                         <outlet property="budgetLabel" destination="WuA-ft-pOg" id="wKv-Tw-eye"/>
+                        <outlet property="leftToSpend" destination="Zze-7u-Fg8" id="uIh-4d-8mA"/>
                         <outlet property="numberOfBudgets" destination="LLC-za-3L0" id="Kjx-pB-9Q9"/>
                         <outlet property="quoteButton" destination="jd8-bf-gw4" id="6HD-02-dkU"/>
                         <outlet property="totalAmount" destination="tPs-do-7zO" id="C4t-KO-ra8"/>
