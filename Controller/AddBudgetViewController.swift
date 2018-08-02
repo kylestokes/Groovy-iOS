@@ -16,7 +16,6 @@ class AddBudgetViewController: UIViewController {
     
     var databaseReference: DatabaseReference!
     var userEmail: String!
-    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: - Outlets
     
@@ -56,7 +55,7 @@ class AddBudgetViewController: UIViewController {
         let device = Device()
         budgetName.becomeFirstResponder()
         budgetName.delegate = self
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             budgetName.autocorrectionType = .no
         }
         budgetName.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)

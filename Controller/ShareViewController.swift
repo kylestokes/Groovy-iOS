@@ -18,7 +18,6 @@ class ShareViewController: UIViewController {
     var databaseReference: DatabaseReference!
     var budget: Budget!
     var userEmail: String!
-    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: - Outlets
     
@@ -232,14 +231,14 @@ class ShareViewController: UIViewController {
     @objc func keyboardWillShow(_ notification: Notification) {
         let device = Device()
         // Only move view if editing bottom textfield
-        if self.email.isEditing && device.isOneOf(iPadsThatNeedAdjusting) {
+        if self.email.isEditing && device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
         let device = Device()
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             view.frame.origin.y = 0
         }
     }

@@ -20,8 +20,6 @@ class BudgetDetailViewController: UIViewController {
     var budget: Budget!
     var userEmail: String!
     var progressRing: UICircularProgressRing!
-    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
-     let iPadPro12InchDevices = [Device.iPadPro12Inch, Device.iPadPro12Inch2, Device.simulator(Device.iPadPro12Inch), Device.simulator(Device.iPadPro12Inch2)]
     
     // MARK: - Outlets
     
@@ -82,9 +80,9 @@ class BudgetDetailViewController: UIViewController {
             progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 80, y: 130, width: 160, height: 160))
         } else if device.isOneOf(iPhone678Devices) {
            progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 155, width: 210, height: 210))
-        } else if device.isOneOf(iPadsThatNeedAdjusting) {
+        } else if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 50, y: 120, width: 105, height: 105))
-        } else if device.isOneOf(iPadPro12InchDevices) {
+        } else if device.isOneOf(iPadsThatNeedAdjusting.iPadPro12InchDevices) {
             progressRing = UICircularProgressRing(frame: CGRect(x: view.bounds.midX - 105, y: 140, width: 210, height: 210))
         }
         else {
@@ -99,7 +97,7 @@ class BudgetDetailViewController: UIViewController {
         ]
         progressRing.outerRingColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
         
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             progressRing.innerRingWidth = 10
             progressRing.outerRingWidth = 10
             progressRing.font = UIFont.boldSystemFont(ofSize: 14)
@@ -143,7 +141,7 @@ class BudgetDetailViewController: UIViewController {
     func addToSpendText() {
         let device = Device()
         spentLabel.text = formatAsCurrency(budget.spent!)
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             spentLabel.font = UIFont.boldSystemFont(ofSize: 20)
         }
     }
@@ -155,7 +153,7 @@ class BudgetDetailViewController: UIViewController {
     func addLeftToSpentAmountLabel() {
         let device = Device()
         leftToSpendAmountLabel.text = formatAsCurrency(budget.left!)
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             leftToSpendAmountLabel.font = UIFont.boldSystemFont(ofSize: 20)
         }
     }

@@ -18,7 +18,6 @@ class HistoryEditViewController: UIViewController {
     var budget: Budget!
     var purchase: String!
     var saveButton: UIBarButtonItem!
-    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: - Outlets
     
@@ -63,7 +62,7 @@ class HistoryEditViewController: UIViewController {
         note.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
         note.delegate = self
         note.tintColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1)
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             note.autocorrectionType = .no
         }
     }

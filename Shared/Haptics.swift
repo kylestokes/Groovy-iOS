@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class Haptics {
+struct Haptics {
     static func doLightHapticFeedback() {
         let light = UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.light)
         light.impactOccurred()
