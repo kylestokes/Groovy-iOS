@@ -19,7 +19,6 @@ class AuthPickerViewController: FUIAuthPickerViewController {
     var bodyText: SpringLabel!
     var device: Device!
     let iphonesThatNeedAdjusting = [Device.iPhone4, Device.iPhone4s, Device.iPhone5, Device.iPhone5s, Device.iPhone5c, Device.iPhoneSE, Device.simulator(Device.iPhone5s), Device.simulator(Device.iPhoneSE)]
-    let iPadsThatNeedAdjusting = [Device.iPad5, Device.iPad6, Device.iPadAir, Device.iPadAir2, Device.iPadPro9Inch, Device.iPadPro10Inch, Device.simulator(Device.iPadPro10Inch), Device.simulator(Device.iPadPro9Inch), Device.simulator(Device.iPadAir), Device.simulator(Device.iPadAir2), Device.simulator(Device.iPad5), Device.simulator(Device.iPad6)]
     
     // MARK: Life Cycle
     
@@ -88,7 +87,7 @@ class AuthPickerViewController: FUIAuthPickerViewController {
         imageView = SpringImageView(image: peaceHandGradient)
         imageView.tintColor = UIColor.white
         imageView.contentMode = .scaleAspectFit
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             height = 75
             y = 25
         } else {
@@ -106,7 +105,7 @@ class AuthPickerViewController: FUIAuthPickerViewController {
         var y: Int
         var fontSize: Int
         
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             y = 110
             fontSize = 34
         } else {
@@ -131,7 +130,7 @@ class AuthPickerViewController: FUIAuthPickerViewController {
         var y: Int
         var fontSize: Int
         
-        if device.isOneOf(iPadsThatNeedAdjusting) {
+        if device.isOneOf(iPadsThatNeedAdjusting.noniPadPro12InchDevices) {
             y = 145
             fontSize = 16
         } else {
