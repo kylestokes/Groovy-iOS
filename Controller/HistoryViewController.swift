@@ -160,7 +160,7 @@ class HistoryViewController: UIViewController {
     }
     
     func getBudgetFromFirebase() {
-        databaseReference.child("budgets").child("\(budget.id!)").observe(.childChanged, with: { (snapshot) in
+        databaseReference.child("budgets").child("\(budget.id!)").observe(.value, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let uid = snapshot.key
                 let budget = Budget.from(firebase: dictionary, uid: uid)
