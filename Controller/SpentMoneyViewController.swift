@@ -80,12 +80,9 @@ class SpentMoneyViewController: UIViewController {
         budgetDictionary["sharedWith"] = budget.sharedWith
         budgetDictionary["spent"] = budget.spent
         budgetDictionary["userDate"] = budget.userDate
-        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
-            if error == nil {
-                Haptics.doSuccessHapticFeedback()
-                self.resignAndDismiss()
-            }
-        }
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary)
+        Haptics.doSuccessHapticFeedback()
+        self.resignAndDismiss()
     }
     
     func resignAndDismiss() {

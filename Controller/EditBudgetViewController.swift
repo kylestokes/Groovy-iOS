@@ -120,11 +120,8 @@ class EditBudgetViewController: UIViewController {
         budgetDictionary["sharedWith"] = budget.sharedWith
         budgetDictionary["spent"] = 0
         budgetDictionary["userDate"] = ["none:none"]
-        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
-            if error == nil {
-                self.resignAndDismiss()
-            }
-        }
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary)
+        self.resignAndDismiss()
     }
     
     @objc func save() {
@@ -140,11 +137,8 @@ class EditBudgetViewController: UIViewController {
         budgetDictionary["sharedWith"] = budget.sharedWith
         budgetDictionary["spent"] = budget.spent
         budgetDictionary["userDate"] = budget.userDate
-        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
-            if error == nil {
-                self.resignAndDismiss()
-            }
-        }
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary)
+        self.resignAndDismiss()
     }
     
     @objc func textFieldDidChange() {

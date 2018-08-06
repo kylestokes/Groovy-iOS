@@ -145,11 +145,8 @@ class HistoryViewController: UIViewController {
         budgetDictionary["sharedWith"] = budget.sharedWith
         budgetDictionary["spent"] = budget.spent
         budgetDictionary["userDate"] = userDateFirebase
-        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary) { (error, ref) in
-            if error == nil {
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(budgetDictionary as NSDictionary)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func formatAsCurrency(_ number: Double) -> String {
@@ -163,7 +160,7 @@ class HistoryViewController: UIViewController {
     }
     
     func getBudgetFromFirebase() {
-        databaseReference.child("budgets").child("\(budget.id!)").observe(.value, with: { (snapshot) in
+        databaseReference.child("budgets").child("\(budget.id!)").observe(.childChanged, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let uid = snapshot.key
                 let budget = Budget.from(firebase: dictionary, uid: uid)

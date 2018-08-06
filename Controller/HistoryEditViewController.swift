@@ -91,13 +91,10 @@ class HistoryEditViewController: UIViewController {
     @objc func save() {
         let indexOfEditedPurchase = budget.history?.index(of: purchase)
         budget.history![indexOfEditedPurchase!] = "\(amount.text!):\(note.text!)"
-        
-        // Save in Firebase and then pop to history
-        databaseReference.child("budgets").child("\(budget.id!)").child("history").setValue(budget.history!) { (error, ref) in
-            if error == nil {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
+        databaseReference.child("budgets").child("\(budget.id!)").child("history").setValue(budget.history!)
+        let historyViewController = self.navigationController?.viewControllers[0] as! HistoryViewController
+        historyViewController.budget = budget
+        self.navigationController?.popToViewController(historyViewController, animated: true)
     }
     
     @objc func textFieldDidChange() {

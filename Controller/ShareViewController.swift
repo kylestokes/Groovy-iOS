@@ -31,12 +31,9 @@ class ShareViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func dismiss(_ sender: UIBarButtonItem) {
-        databaseReference.child("budgets").child("\(budget.id!)").setValue(getUpdatedBudget() as NSDictionary) { (error, ref) in
-            if error == nil {
-                self.email.resignFirstResponder()
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
+        databaseReference.child("budgets").child("\(budget.id!)").setValue(getUpdatedBudget() as NSDictionary)
+        self.email.resignFirstResponder()
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func shareBudgetOnSave(_ sender: UIBarButtonItem) {

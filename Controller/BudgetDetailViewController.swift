@@ -183,11 +183,8 @@ class BudgetDetailViewController: UIViewController {
     func delete(budget: Budget) {
         if budget.createdBy == userEmail {
             let delete = UIAlertAction(title: "Delete", style: .default, handler: { (delete) in
-                Database.database().reference().child("budgets").child(budget.id!).removeValue() { (error, ref) in
-                    if error == nil {
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                }
+                Database.database().reference().child("budgets").child(budget.id!).removeValue()
+                self.navigationController?.popViewController(animated: true)
             })
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let actions = [delete, cancel]
