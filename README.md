@@ -1,5 +1,7 @@
 
 <img width="100" alt="icon" src="/Screenshots/icon.png ">
+<a href="https://itunes.apple.com/us/app/groovy-money-mindfulness/id1420226962?mt=8" width="125"><img width="125" alt="badge" src="/Screenshots/badge.png"></a>
+
 
 # Groovy
 
@@ -68,12 +70,6 @@ Groovy ❤️'s the amazing iOS community.
 * Groovy uses the [Firebase Realtime Database](https://firebase.google.com/docs/database/) to store data locally and in the cloud.  Firebase uses web sockets to make sure everything is in sync in realtime. When you or a friend make a change to a shared budget, everyone will see the updates instantly. It's pretty amazing.
 
 * Groovy uses the [Quotes REST API](https://quotes.rest) to get a daily inspirational quote to make sure you're staying motivated.
-
-## Run
-
-Download the project folder, open the `groovy.xcworkspace` file, select a simulator or physical device from Xcode, and run. Sign in with Google, Facebook, or email.
-
-If any issues arise, use the Terminal to go to the project folder where the `Podfile` is located and run `pod install`
 
 ___
 
